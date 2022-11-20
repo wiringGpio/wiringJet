@@ -3,18 +3,24 @@
 #include <wiringJet.h>
 #include "wiringJetTests.h"
 
+//  Test ISR
+//  Setup:
+//		- Connect three appropriate header pins together. One will be used for output, the other two for input
+//		- Test verifies itself.
+//
 int testPinInput(int argc, char *argv[])
 {
+	//  hardware setup configuration
 	int outputPin = 7;	
-	pinMode(outputPin, OUTPUT);
-	
 	int input1 = 11;
-	pinMode(input1, INPUT);
 	int input2 = 13;
-	pinMode(input2, INPUT);
 	
+	pinMode(outputPin, OUTPUT);
+	pinMode(input1, INPUT);
+	pinMode(input2, INPUT);
 
 	int x = 0;
+	Log(LogLevelInfo, "TestPinInput.cpp", "testPinInput", "Starting pin input test");
 	while (x < 5) 
 	{
 		digitalWrite(outputPin, 1);

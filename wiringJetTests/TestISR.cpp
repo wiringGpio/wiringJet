@@ -14,19 +14,26 @@ bool valueTwo = true;
 void PinCallbackTwo()
 {
 	valueTwo = !valueTwo;
-	LogFormatted(LogLevelDebug, "TestISR.cpp", "PinCallbackOne", "PinCallbackTwo valueOne after change %d", valueTwo);
+	LogFormatted(LogLevelDebug, "TestISR.cpp", "PinCallbackOne", "PinCallbackTwo valueTwo after change %d", valueTwo);
 }
 
 int callbackDelayUSeconds = 1000;
 
+
+//  Test ISR
+//  Setup:
+//		- Connect three appropriate header pins together. One will be used for output, the other two for input
+//		- Test verifies itself.
+//
 int testISR(int argc, char *argv[])
 {
+	//  hardware setup configuration
 	int outputPin = 7;	
-	pinMode(outputPin, OUTPUT);
-	
 	int input1 = 11;
-	pinMode(input1, INPUT);
 	int input2 = 13;
+	
+	pinMode(outputPin, OUTPUT);
+	pinMode(input1, INPUT);
 	pinMode(input2, INPUT);
 	
 	int ret = wiringJetISR(input1, INT_EDGE_RISING, PinCallbackOne);
@@ -43,6 +50,7 @@ int testISR(int argc, char *argv[])
 		return ret;
 	}
 
+	Log(LogLevelInfo, "TestISR.cpp", "testISR", "Starting ISR test.");
 	int x = 0;
 	while (x < 5) 
 	{

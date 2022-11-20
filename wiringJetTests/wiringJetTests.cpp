@@ -105,7 +105,7 @@ void LogFormatted(LogLevel level, const char* sender, const char* function, cons
 		va_list args;
 
 		va_start(args, format);
-		if (0 > vasprintf(&data, format, args)) data = 0x00;        //this is for logging, so failed allocation is not fatal
+		if (0 > vasprintf(&data, format, args)) data = 0x00;          //this is for logging, so failed allocation is not fatal
 		va_end(args);
 
 		if (data) {
@@ -168,12 +168,13 @@ int main(int argc, char *argv[])
 	LogFunction = LoggingFunction;
 	Log(LogLevelInfo, "wiringJetTests.cpp", "main", "Starting wiringJetTests.");
 	
+	int testsFailed = 0;
 	int testReturn = -1;
 	string argument = "all";
 	if (argc > 1)
 		argument = string(argv[1]);
 
-	//  test pin output
+	//  test pin output "pinOutput"
 	if(argument.compare("all") == 0 || argument.compare("pinOutput") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testPinOutput");
@@ -183,6 +184,7 @@ int main(int argc, char *argv[])
 		testReturn = testPinOutput(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testPinOutput. %d failures reported.", testFailures);	
 		}
 		else
@@ -190,7 +192,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testPinOutput with ZERO errors.");
 		}
 	}
-	//  test pin input
+	//  test pin input "pinInput"
 	if(argument.compare("all") == 0 || argument.compare("pinInput") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testPinInput");
@@ -200,6 +202,7 @@ int main(int argc, char *argv[])
 		testReturn = testPinInput(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testPinInput. %d failures reported.", testFailures);	
 		}
 		else
@@ -207,7 +210,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testPinInput with ZERO errors.");
 		}
 	}
-	//  test gpioPwmOutput
+	//  test gpioPwmOutput "gpioPwmOutput"
 	if(argument.compare("all") == 0 || argument.compare("gpioPwmOutput") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testGpioPwmOutput");
@@ -217,6 +220,7 @@ int main(int argc, char *argv[])
 		testReturn = testGpioPwmOutput(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testGpioPwmOutput. %d failures reported.", testFailures);	
 		}
 		else
@@ -224,7 +228,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testGpioPwmOutput with ZERO errors.");
 		}
 	}
-	//  test ISR	
+	//  test ISR "isr"	
 	if(argument.compare("all") == 0 || argument.compare("isr") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testISR");
@@ -234,6 +238,7 @@ int main(int argc, char *argv[])
 		testReturn = testISR(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testISR. %d failures reported.", testFailures);	
 		}
 		else
@@ -241,7 +246,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testISR with ZERO errors.");
 		}
 	}
-	//  testMCP23008
+	//  test MCP23008 "mcp23008"
 	if(argument.compare("all") == 0 || argument.compare("mcp23008") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testMcp23008");
@@ -251,6 +256,7 @@ int main(int argc, char *argv[])
 		testReturn = testMcp23008(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testMcp23008. %d failures reported.", testFailures);	
 		}
 		else
@@ -258,7 +264,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testMcp23008 with ZERO errors.");
 		}
 	}
-	//  testMCP23017
+	//  test MCP23017 "mcp23017"
 	if(argument.compare("all") == 0 || argument.compare("mcp23017") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testMcp23017");
@@ -268,6 +274,7 @@ int main(int argc, char *argv[])
 		testReturn = testMcp23017(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testMcp23017. %d failures reported.", testFailures);	
 		}
 		else
@@ -275,7 +282,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testMcp23017 with ZERO errors.");
 		}
 	}
-	//  testADS1115
+	//  test ADS1115 "ads1115"
 	if(argument.compare("all") == 0 || argument.compare("ads1115") == 0) 	
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testAds1115");
@@ -285,6 +292,7 @@ int main(int argc, char *argv[])
 		testReturn = testAds1115(argc, argv);	
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testAds1115. %d failures reported.", testFailures);	
 		}
 		else
@@ -292,7 +300,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testAds1115 with ZERO errors.");
 		}
 	}
-	//  testPCS9685
+	//  test PCS9685 "pca9685"
 	if(argument.compare("all") == 0 || argument.compare("pca9685") == 0)
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testPca9685");
@@ -302,6 +310,7 @@ int main(int argc, char *argv[])
 		testReturn = testPca9685(argc, argv);
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testPca9685. %d failures reported.", testFailures);	
 		}
 		else
@@ -309,7 +318,7 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testPca9685 with ZERO errors.");
 		}
 	}
-	//  testMcp3008
+	//  test Mcp3008 "mcp3008"
 	if(argument.compare("all") == 0 || argument.compare("mcp3008") == 0) 	
 	{
 		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testMcp3008");
@@ -319,6 +328,7 @@ int main(int argc, char *argv[])
 		testReturn = testMcp3008(argc, argv);	
 		if (testReturn != 0 || testFailures > 0)
 		{
+			testsFailed++;
 			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testMcp3008. %d failures reported.", testFailures);	
 		}
 		else
@@ -327,10 +337,16 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	
 	TerminateLibrary();
 	
-	Log(LogLevelInfo, "wiringJetTests.cpp", "main", "Tests complete. Press any key to exit.");
+	if (testsFailed > 0)
+	{
+		LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<( %d tests failed. Press review output before you press [Enter] to quit the program.", testsFailed);
+	}
+	else
+	{
+		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :) All tests completd with no failures. Press [Enter] to quit the program.");
+	}
 	getchar();
 }
 

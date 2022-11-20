@@ -4,10 +4,19 @@
 #include <mcp3004.h>
 #include "wiringJetTests.h"
 
-
+//  Test MCP3008
+//  Setup:
+//		- Connect MCP3008 to the SPI bus
+//		- Set the correct bus number
+//		- Provide some safe input to the pins and verify the readings are correct
+//
 int testMcp3008(int argc, char *argv[])
 {
-	int ret = mcp3008Setup(400, 0);
+	//  hardware setup configuration
+	int bus = 0;
+	int pinBase = 400;
+	
+	int ret = mcp3008Setup(pinBase, bus);
 	if (ret < 0)
 	{
 		LogFormatted(LogLevelError, "TestMcp3008.cpp", "testMcp3008", "ADS1115 initialisation failed. Error code:  %d.", ret);
@@ -19,14 +28,14 @@ int testMcp3008(int argc, char *argv[])
 	}	
 	
 	//  read from pin 0 every two seconds for thirty seconds
-	int pin = 400;
+	LogFormatted(LogLevelInfo, "TestMcp3008.cpp", "testMcp3008", "Reading from MCP pins for the next 30 seconds.");
 	int x = 0;
-	while (x < 1000000)
+	while (x < 15)
 	{
-		for (int i = 400; i < 408; i++)
+		for (int i = pinBase; i < pinBase + 8; i++)
 		{
 			auto value = analogRead(i);
-			LogFormatted(LogLevelDebug, "TestMcp3008.cpp", "testMcp3008", "Reading value from MCP pin %d:  %d.", i, value);
+			LogFormatted(LogLevelDebug, "TestMcp3008.cpp", "testMcp3008", "Reading value from MCP pin %d:  %d.", i - pinBase, value);
 		}
 		usleep(500000);
 		x++;
