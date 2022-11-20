@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{b5a427b8-81f0-459d-acc3-4268a3da4492}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{2db51446-d80d-41a4-b83f-e9c34d276730}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{4d55d0c3-2afe-482b-a8aa-f0a9af924952}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{87d88bf4-5dda-4d85-815e-0dec66c2e254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{3850e916-97f2-41d8-b591-267037322256}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="wiringJet-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="wiringJet-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jetgpio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="mcp23008.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="wiringJet.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ads1115.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="pca9685.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="wiringJetI2C.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="wiringJetSPI.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="mcp3004.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mcp23008.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="mcp23x0817.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="wiringJet.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ads1115.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="pca9685.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="wiringJetImplementation.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="wiringJetI2C.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="wiringJetSPI.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="mcp3004.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

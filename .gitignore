@@ -1,0 +1,7 @@
+.visualgdb
+.vs
+wiringJet/Debug
+*.old
+*.user
+wiringJetTests/Debug
+._.gitignore

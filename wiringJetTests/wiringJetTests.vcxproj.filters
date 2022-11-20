@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{086248ba-c1a1-4d9e-98bd-64e8b310be5e}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{c27dadf5-08aa-486c-ae6b-910f8a239600}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{2a9eaff7-85fa-47ee-a64c-08d7e1c1eaec}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{862ff8e9-19f6-472f-9789-4233a172fce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{cc603681-8636-4ff9-99ae-192b95a456a1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="wiringJetTests.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="wiringJetTests-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="wiringJetTests-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <ClCompile Include="TestMcp23008.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPinOutput.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAds1115.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPca9685.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGpioPwmOutput.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPinInput.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestISR.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMcp3008.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="wiringJetTests.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
