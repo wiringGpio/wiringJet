@@ -949,7 +949,7 @@ void gpioTerminate(void)
 	 for(int j = 0 ; j < thread_n ; j++) 
 	{
 		pthread_join(callThd[j], &status_thread);
-		LogFormatted(LogLevelInfo, "jetgpio.c", "gpioTerminate", "Thread number: %d joined", j);
+		LogFormatted(LogLevelDebug, "jetgpio.c", "gpioTerminate", "Thread number: %d joined", j);
 	}
 
 	// Free allocated memory 

@@ -65,6 +65,9 @@
     <ClCompile Include="mcp3004.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="mcp23017.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mcp23008.h">
@@ -95,6 +98,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="mcp3004.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="mcp23017.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

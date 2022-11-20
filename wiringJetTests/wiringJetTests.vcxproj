@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="TestGpioPwmOutput.cpp" />
     <ClCompile Include="TestISR.cpp" />
+    <ClCompile Include="TestMcp23017.cpp" />
     <ClCompile Include="TestMcp3008.cpp" />
     <ClCompile Include="TestPinInput.cpp" />
     <ClCompile Include="wiringJetTests.cpp" />

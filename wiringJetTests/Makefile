@@ -76,7 +76,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := TestGpioPwmOutput.cpp TestISR.cpp TestMcp3008.cpp TestPinInput.cpp wiringJetTests.cpp TestAds1115.cpp TestMcp23008.cpp TestPca9685.cpp TestPinOutput.cpp
+SOURCEFILES := TestGpioPwmOutput.cpp TestISR.cpp TestMcp23017.cpp TestMcp3008.cpp TestPinInput.cpp wiringJetTests.cpp TestAds1115.cpp TestMcp23008.cpp TestPca9685.cpp TestPinOutput.cpp
 EXTERNAL_LIBS := ../wiringJet/$(BINARYDIR)/libwiringJet.so
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 

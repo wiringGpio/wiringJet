@@ -258,6 +258,23 @@ int main(int argc, char *argv[])
 			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testMcp23008 with ZERO errors.");
 		}
 	}
+	//  testMCP23017
+	if(argument.compare("all") == 0 || argument.compare("mcp23017") == 0)
+	{
+		Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   Starting testMcp23017");
+		testFailures = 0;
+		if (!SetupLibrary())
+			return -1;
+		testReturn = testMcp23017(argc, argv);
+		if (testReturn != 0 || testFailures > 0)
+		{
+			LogFormatted(LogLevelInfo, "wiringJetTests.cpp", "main", "********   FAILURE :<(  testMcp23017. %d failures reported.", testFailures);	
+		}
+		else
+		{
+			Log(LogLevelInfo, "wiringJetTests.cpp", "main", "********   SUCCESS :)  Finished testMcp23017 with ZERO errors.");
+		}
+	}
 	//  testADS1115
 	if(argument.compare("all") == 0 || argument.compare("ads1115") == 0) 	
 	{

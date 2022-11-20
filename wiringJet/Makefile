@@ -76,7 +76,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := ads1115.c jetgpio.c Logging.c mcp23008.c mcp3004.c pca9685.c wiringJet.c wiringJetI2C.c wiringJetSPI.c
+SOURCEFILES := ads1115.c jetgpio.c Logging.c mcp23008.c mcp23017.c mcp3004.c pca9685.c wiringJet.c wiringJetI2C.c wiringJetSPI.c
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 

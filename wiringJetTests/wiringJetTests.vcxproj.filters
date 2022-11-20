@@ -60,6 +60,9 @@
     <ClCompile Include="TestMcp3008.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="TestMcp23017.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

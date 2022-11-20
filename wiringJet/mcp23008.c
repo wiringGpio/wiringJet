@@ -125,7 +125,7 @@ int mcp23008Setup(const int bus, const int pinBase, const int i2cAddress)
 		
 	wiringJetI2CWriteReg8(fd, MCP23x08_IOCON, IOCON_INIT);
 	node->data2           = wiringJetI2CReadReg8(fd, MCP23x08_OLAT);
-	LogFormatted(LogLevelInfo, "mcp23008.c", "mcp23008Setup", "Read register MCP23x08_OLAT, node->data2 = %d", node->data2);
+	LogFormatted(LogLevelDebug, "mcp23008.c", "mcp23008Setup", "Read register MCP23x08_OLAT, node->data2 = %d", node->data2);
 	
 	return fd ;
 }

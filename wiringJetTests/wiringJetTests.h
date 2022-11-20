@@ -21,6 +21,8 @@ int testISR(int argc, char *argv[]);
 
 int testMcp23008(int argc, char *argv[]);
 
+int testMcp23017(int argc, char *argv[]);
+
 int testAds1115(int argc, char *argv[]);
 
 int testPca9685(int argc, char *argv[]);

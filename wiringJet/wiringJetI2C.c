@@ -220,7 +220,7 @@ int wiringJetI2CSetupInterface(const char *device, int devId)
 		return -1;
 	}
 
-	LogFormatted(LogLevelInfo, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Setup I2C interface %s 0x%x.", device, devId);
+	LogFormatted(LogLevelDebug, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Setup I2C interface %s 0x%x.", device, devId);
 	return fd ;
 }
 

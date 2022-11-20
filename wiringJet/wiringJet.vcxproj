@@ -74,6 +74,7 @@
     <ClCompile Include="jetgpio.c" />
     <ClCompile Include="Logging.c" />
     <ClCompile Include="mcp23008.c" />
+    <ClCompile Include="mcp23017.c" />
     <ClCompile Include="mcp3004.c" />
     <ClCompile Include="pca9685.c" />
     <ClCompile Include="wiringJet.c" />
@@ -94,6 +95,7 @@
     <ClInclude Include="ads1115.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="mcp23008.h" />
+    <ClInclude Include="mcp23017.h" />
     <ClInclude Include="mcp23x0817.h" />
     <ClInclude Include="mcp3004.h" />
     <ClInclude Include="pca9685.h" />
