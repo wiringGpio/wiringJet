@@ -58,7 +58,6 @@ int testISR(int argc, char *argv[])
 		{
 			LogFormatted(LogLevelError, "TestPinInput.cpp", "testPinInput", "Callback error: valueOne %d value2 %d.", valueOne, valueTwo);
 		}
-		
 		usleep(100000);
 		
 		digitalWrite(outputPin, 0);
@@ -71,7 +70,6 @@ int testISR(int argc, char *argv[])
 		{
 			LogFormatted(LogLevelError, "TestPinInput.cpp", "testPinInput", "Callback error: valueOne %d value2 %d.", valueOne, valueTwo);
 		}
-	
 		usleep(1000000);
 	
 		x++;
