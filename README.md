@@ -49,7 +49,7 @@ Clone or download the repository into a folder on the Jetson, cd to that folder 
     make CONFIG=Release  
     sudo make CONFIG=Release install                                             
   
-To use wiringJet in your program, `#include <wiringJet.h>` and add  `-lwiringJet -lpthread` to your linker settings.
+To use wiringJet in your program, `#include <wiringJet.h>` and add  `-lwiringjet -lpthread` to your linker settings.
 
 To uninstall the library, from the wiringJet/wiringJet folder:
 
