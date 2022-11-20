@@ -29,7 +29,6 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "wiringJetLogging.h"
 
 #include "mcp23x0817.h"
 #include "mcp23008.h"
@@ -105,7 +104,7 @@ int mcp23008Setup(const int bus, const int pinBase, const int i2cAddress)
 {
 	// Create a node with 8 pins 
 	struct wiringJetNodeStruct *node = wiringJetNewNode(pinBase, 8);
-	if(!node)
+	if (!node)
 	{
 		LogFormatted(LogLevelWarn, "mcp23008.c", "mcp23008Setup", "Invalid pin base and size. Pins %d through %d are not available.", pinBase, pinBase + 7);
 		return -1;
@@ -115,7 +114,7 @@ int mcp23008Setup(const int bus, const int pinBase, const int i2cAddress)
 	if (fd < 0)
 		return fd;
 	
-	LogFormatted(LogLevelInfo, "mcp23008.c", "mcp23008Setup", "Created MCP23008 on bus %d at address 0x%x. Pin base %d. File Descriptor (fd) %d",bus, i2cAddress, pinBase, fd);
+	LogFormatted(LogLevelInfo, "mcp23008.c", "mcp23008Setup", "Created MCP23008 on bus %d at address 0x%x. Pin base %d. File Descriptor (fd) %d", bus, i2cAddress, pinBase, fd);
 
 	node->fd              = fd;
 	node->pinMode         = myPinMode;

@@ -37,7 +37,6 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "wiringJetLogging.h"
 
 
 // The SPI bus parameters
@@ -53,7 +52,6 @@ static int         spiFds[2];
  *	Return the file-descriptor for the given channel
  *********************************************************************************
  */
-
 int wiringJetSPIGetFd(int channel)
 {
 	return spiFds[channel & 1] ;
@@ -68,7 +66,6 @@ int wiringJetSPIGetFd(int channel)
  *	This is also a full-duplex operation.
  *********************************************************************************
  */
-
 int wiringJetSPIDataRW(int channel, unsigned char *data, int len)
 {
 	struct spi_ioc_transfer spi ;
@@ -89,6 +86,11 @@ int wiringJetSPIDataRW(int channel, unsigned char *data, int len)
 
 	return ioctl(spiFds[channel], SPI_IOC_MESSAGE(1), &spi);
 }
+//
+int wiringPiSPIDataRW(int channel, unsigned char *data, int len)
+{
+	return wiringJetSPIDataRW(channel, data, len);
+}
 
 
 /*
@@ -96,7 +98,6 @@ int wiringJetSPIDataRW(int channel, unsigned char *data, int len)
  *	Open the SPI device, and set it up, with the mode, etc.
  *********************************************************************************
  */
-
 int wiringJetSPISetupMode(int channel, int speed, int mode)
 {
 	//  make sure we can open SPI
@@ -151,6 +152,11 @@ int wiringJetSPISetupMode(int channel, int speed, int mode)
 	  
 	return fd;
 }
+//
+int wiringPiSPISetupMode(int channel, int speed, int mode)
+{
+	return wiringJetSPISetupMode(channel, speed, mode);
+}
 
 
 /*
@@ -158,8 +164,12 @@ int wiringJetSPISetupMode(int channel, int speed, int mode)
  *	Open the SPI device, and set it up, etc. in the default MODE 0
  *********************************************************************************
  */
-
 int wiringJetSPISetup(int channel, int speed)
 {
 	return wiringJetSPISetupMode(channel, speed, 0);
+}
+//
+int wiringPiSPISetup(int channel, int speed)
+{
+	return wiringJetSPISetup(channel, speed);
 }

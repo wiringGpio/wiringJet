@@ -30,7 +30,6 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "wiringJetLogging.h"
 
 #include "pca9685.h"
 

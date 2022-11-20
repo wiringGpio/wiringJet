@@ -26,7 +26,8 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <stdarg.h>
-#include "wiringJetLogging.h"
+
+#include "wiringJet.h"
 
 
 LoggingCallback LogFunction = 0x00;
@@ -58,7 +59,7 @@ void Log(LogLevel level, const char* sender, const char* function, const char* d
 		logItem.Function = function;
 		logItem.Data = data;
 		
-		if ( level >= LoggingLevel )
+		if (level >= LoggingLevel)
 			LogFunction(logItem);
 	}
 }
@@ -74,7 +75,7 @@ void LogFormatted(LogLevel level, const char* sender, const char* function, cons
 		va_list args;
 
 		va_start(args, format);
-		if (0 > vasprintf(&data, format, args)) data = 0x00;     //this is for logging, so failed allocation is not fatal
+		if (0 > vasprintf(&data, format, args)) data = 0x00;      //this is for logging, so failed allocation is not fatal
 		va_end(args);
 
 		if (data) {

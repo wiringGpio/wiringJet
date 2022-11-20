@@ -42,7 +42,6 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "wiringJetLogging.h"
 
 #include "ads1115.h"
 
@@ -232,7 +231,7 @@ static void myDigitalWrite(struct wiringJetNodeStruct *node, int pin, int data)
 		{
 			if ((data < 0) || (data > 7))	// Use default if out of range
 			  data = 4;
-			node->data1 = dataRates[data]; 	// Bugfix 0-1 by "Eric de jong (gm)" <ericdejong@gmx.net> - Thanks.
+			node->data1 = dataRates[data];  	// Bugfix 0-1 by "Eric de jong (gm)" <ericdejong@gmx.net> - Thanks.
 		}
   
 }
@@ -290,8 +289,8 @@ int ads1115Setup(const int bus, const int pinBase, int i2cAddr)
 	LogFormatted(LogLevelInfo, "ads1115.c", "ads1115Setup", "Created ADS1115 on bus %d at address 0x%x. Pin base %d. File Descriptor (fd) %d", bus, i2cAddr, pinBase, fd);
 
 	node->fd           = fd;
-	node->data0        = CONFIG_PGA_4_096V; 	// Gain in data0
-	node->data1        = CONFIG_DR_128SPS; 	// Samples/sec in data1
+	node->data0        = CONFIG_PGA_4_096V;  	// Gain in data0
+	node->data1        = CONFIG_DR_128SPS;  	// Samples/sec in data1
 	node->analogRead   = myAnalogRead;
 	node->analogWrite  = myAnalogWrite;
 	node->digitalWrite = myDigitalWrite;

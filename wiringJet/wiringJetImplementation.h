@@ -25,7 +25,7 @@ struct wiringJetNodeStruct
 	int     pinBase;
 	int     pinMax;
 
-	int          fd;   	// Node specific
+	int          fd;    	// Node specific
 	unsigned int data0;  	
 	unsigned int data1;  	
 	unsigned int data2;  	

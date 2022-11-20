@@ -75,8 +75,21 @@ extern "C" {
 }
 #endif
 
+// Logging Callback
+extern LoggingCallback LogFunction;
+
+//  Log Level
+extern LogLevel LoggingLevel;
+
+//  Log functions
+void Log(LogLevel level, const char* sender, const char* function, const char* data);
+void LogFormatted(LogLevel level, const char* sender, const char* function, const char* format, ...);
+
 #pragma endregion
 
+
+//  Defines
+//
 #pragma region Defines
 
 #define	INPUT			(0)
@@ -99,26 +112,67 @@ extern "C" {
 
 #pragma endregion
 
+
+#pragma region Interface
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 	
+	//  Setup Function
+	//    You must call the setup function before using the library
 	extern int wiringJetSetupPhys();
 	extern int wiringPiSetupPhys();
+	
+	//  Tear Down Function
+	//    It is recommended to call terminate function when your program exits
 	extern void wiringJetTerminate();
 
+	//  GPIO Pin Control
+	
+	//  Set Pin Mode
+	//		INPUT, OUTPUT, or PWM_OUTPUT
 	extern          void pinMode(int pin, int mode);
+	
+	//  Read the Pin
+	//		returns LOW (0) if the pin is low, and HIGH (1) if the pin is high
 	extern          int  digitalRead(int pin);
+	
+	// Write to the pin
+	//		Set the pin to be LOW (0) or HIGH (1)
 	extern          void digitalWrite(int pin, int value);
+	
+	//  Set PWM Frequency
+	//		Set the PWM frequency for the pin, valid only for pins that support hardware PWM
 	extern			int pwmSetFrequency(int pin, float frequency);
+	
+	//  Write PWM 
+	//		Set the duty cycle, relative to the max integer duty cycle for the hardware PWM device
+	//		Jetson hardware PWM pins are 0 - 255
+	//		PCA9685 hardware is 0 - 4095
+	//
 	extern          void pwmWrite(int pin, int value);
+	
+	// Read analog value from the pin
+	//		The Jetson does not have built in ADC.
+	//		This function is used I2C or SPI devices, such as analog to digital converters
 	extern          int  analogRead(int pin);
 
-
-	extern int  waitForInterrupt(int pin, int mS);
-	extern int  wiringJetISR(int pin, int mode, void(*function)(void));
+	//  Pin Edge Detection
+	//		Register a function to be called when the pin changes from high to low
+	//		Mode is INT_EDGE_FALLING, INT_EDGE_RISING, or INT_EDGE_BOTH
+	extern int  wiringJetISR(int pin, int mode, void(*function)(void));	
+	//  wiring pi api convenience wrapper
 	extern int  wiringPiISR(int pin, int mode, void(*function)(void));
+	
+
+	//  Wait for Interrupt
+	//		NOT IMPLEMENTED
+	extern int  waitForInterrupt(int pin, int mS);
+	
 	
 #ifdef __cplusplus
 }
 #endif
+
+#pragma endregion

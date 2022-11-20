@@ -39,7 +39,6 @@
 
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
-#include "wiringJetLogging.h"
 
 #pragma region Logging
 
@@ -90,10 +89,10 @@ struct wiringJetNodeStruct *wiringJetNewNode(int pinBase, int numPins)
 	// Minimum pin base is 64
 
 	 if(pinBase < 64)
-	 {
+	{
 		Log(LogLevelWarn, "wiringJet.c", "wiringJetNewNode", "You can not create a node with pin base < 64.");
 		return NULL;
-	 }
+	}
 
 	// Check all pins in-case there is overlap:
 	for(pin = pinBase ; pin < (pinBase + numPins) ; ++pin)
@@ -105,7 +104,7 @@ struct wiringJetNodeStruct *wiringJetNewNode(int pinBase, int numPins)
 		}
 	}
 
-	node = (struct wiringJetNodeStruct *)calloc(sizeof(struct wiringJetNodeStruct), 1);      	// calloc zeros
+	node = (struct wiringJetNodeStruct *)calloc(sizeof(struct wiringJetNodeStruct), 1);       	// calloc zeros
 	if(node == NULL)
 	{
 		LogFormatted(LogLevelFatal, "wiringJet.c", "wiringJetNewNode", "Unable to allocate memory %s.", strerror(errno));
@@ -170,7 +169,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void(
 
 //  Setup
 //
-extern int wiringJetSetupPhys()
+int wiringJetSetupPhys()
 {
 	return gpioInitialise();
 }
@@ -178,7 +177,7 @@ extern int wiringJetSetupPhys()
 
 //  ShutDown
 //
-extern void wiringJetTerminate()
+void wiringJetTerminate()
 {
 	gpioTerminate();
 }
@@ -307,7 +306,7 @@ int  analogRead(int pin)
 
 //  Wait for Interrupt
 //
-extern int  waitForInterrupt(int pin, int mS)
+int  waitForInterrupt(int pin, int mS)
 {
 	Log(LogLevelError, "wiringJet.c", "waitForInterrupt", "not implemented");
 	return -1;
@@ -317,12 +316,12 @@ extern int  waitForInterrupt(int pin, int mS)
 //  Set interrupt callback
 //
 static unsigned long interruptTimeStamp;
-extern int  wiringJetISR(int pin, int mode, void(*function)(void))
+int  wiringJetISR(int pin, int mode, void(*function)(void))
 {
 	gpioSetISRFunc(pin, mode, &interruptTimeStamp, function);
 }
 //
-extern int  wiringPiISR(int pin, int mode, void(*function)(void))
+int  wiringPiISR(int pin, int mode, void(*function)(void))
 {
 	wiringJetISR(pin, mode, function);
 }

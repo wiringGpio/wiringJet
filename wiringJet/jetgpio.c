@@ -49,7 +49,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <linux/gpio.h>
 #include <pthread.h>
 
-#include "wiringJetLogging.h"
+#include "wiringJet.h"
 
 //  Definitions from jetgpio.h
 //
@@ -418,7 +418,7 @@ int gpioInitialise(void)
 {
 	int status = 1;
 	//  Getting the page size
-	int pagesize = sysconf(_SC_PAGESIZE);     //getpagesize();	
+	int pagesize = sysconf(_SC_PAGESIZE);      //getpagesize();	
 	LogFormatted(LogLevelInfo, "jetgpio.c", "gpioInitialize", "Initializing GPIO with page size %d", pagesize);
 	
 	//  read physical memory (needs root)
@@ -1529,7 +1529,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 int gpioSetMode(unsigned gpio, unsigned mode)
 {
 	int status = 0;
-	if (mode == 0) 
+	if (mode == INPUT) 
 	{
 		switch (gpio)
 		{
@@ -1706,7 +1706,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			Log(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Only gpio numbers from 3 to 40 are accepted.");
 		}
 	}
-	else if (mode == 1) 
+	else if (mode == OUTPUT) 
 	{
 		switch (gpio)
 		{	
@@ -1884,7 +1884,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 		}
 		
 	}
-	else if (mode == 1) 
+	else if (mode == PWM_OUTPUT) 
 	{
 		return gpioPWM(gpio, 0);
 	}

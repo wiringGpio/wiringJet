@@ -29,15 +29,24 @@
 extern "C" {
 #endif
 
+	//  I2C functions
 	extern int wiringJetI2CRead(int fd);
 	extern int wiringJetI2CReadReg8(int fd, int reg);
-	extern int wiringJetI2CReadReg16(int fd, int reg);
-
+	extern int wiringJetI2CReadReg16(int fd, int reg);	
 	extern int wiringJetI2CWrite(int fd, int data);
 	extern int wiringJetI2CWriteReg8(int fd, int reg, int data);
 	extern int wiringJetI2CWriteReg16(int fd, int reg, int data);
-
 	extern int wiringJetI2CSetup(const int bus, const int devId);
+	
+	//  wiring pi api convenience wrapper
+	extern int wiringPiI2CRead(int fd); 
+	extern int wiringPiI2CReadReg8(int fd, int reg);
+	extern int wiringPiI2CReadReg16(int fd, int reg);
+	extern int wiringPiI2CWrite(int fd, int data);
+	extern int wiringPiI2CWriteReg8(int fd, int reg, int data);
+	extern int wiringPiI2CWriteReg16(int fd, int reg, int data);
+	extern int wiringPiI2CSetup(const int bus, const int devId);
+
 
 #ifdef __cplusplus
 }

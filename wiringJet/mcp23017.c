@@ -29,7 +29,6 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "wiringJetLogging.h"
 
 #include "mcp23x0817.h"
 #include "mcp23017.h"
@@ -106,7 +105,7 @@ static void myDigitalWrite(struct wiringJetNodeStruct *node, int pin, int value)
 {
 	int bit, old;
 
-	pin -= node->pinBase; 	// Pin now 0-15
+	pin -= node->pinBase;  	// Pin now 0-15
 
 	bit = 1 << (pin & 7);
 

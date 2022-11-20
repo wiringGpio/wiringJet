@@ -29,10 +29,17 @@
 extern "C" {
 #endif
 
+	//  SPI functions
 	int wiringJetSPIGetFd(int channel);
 	int wiringJetSPIDataRW(int channel, unsigned char *data, int len);
 	int wiringJetSPISetupMode(int channel, int speed, int mode);
 	int wiringJetSPISetup(int channel, int speed);
+	
+	//  wiring pi api convenience wrapper
+	int wiringPiSPIGetFd(int channel);
+	int wiringPiSPIDataRW(int channel, unsigned char *data, int len);
+	int wiringPiSPISetupMode(int channel, int speed, int mode);
+	int wiringPiSPISetup(int channel, int speed);
 
 #ifdef __cplusplus
 }

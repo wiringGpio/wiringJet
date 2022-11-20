@@ -59,7 +59,6 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "wiringJetLogging.h"
 
 // I2C definitions
 
@@ -92,7 +91,7 @@ union i2c_smbus_data
 {
 	uint8_t  byte;
 	uint16_t word;
-	uint8_t  block[I2C_SMBUS_BLOCK_MAX + 2];  	// block [0] is used for length + one more for PEC
+	uint8_t  block[I2C_SMBUS_BLOCK_MAX + 2];   	// block [0] is used for length + one more for PEC
 }
 ;
 
@@ -132,6 +131,11 @@ int wiringJetI2CRead(int fd)
 		return data.byte & 0xFF ;
 	}
 }
+//
+int wiringPiI2CRead(int fd)
+{
+	return wiringJetI2CRead(fd);
+}
 
 
 int wiringJetI2CReadReg8(int fd, int reg)
@@ -146,6 +150,11 @@ int wiringJetI2CReadReg8(int fd, int reg)
 	}
 	else
 		return data.byte & 0xFF ;
+}
+//
+int wiringPiI2CReadReg8(int fd, int reg)
+{
+	return wiringJetI2CReadReg8(fd, reg);
 }
 
 
@@ -162,6 +171,11 @@ int wiringJetI2CReadReg16(int fd, int reg)
 	else
 		return data.word & 0xFFFF ;
 }
+//
+int wiringPiI2CReadReg16(int fd, int reg)
+{
+	return wiringJetI2CReadReg16(fd, reg);
+}
 
 
 int wiringJetI2CWrite(int fd, int data)
@@ -173,6 +187,11 @@ int wiringJetI2CWrite(int fd, int data)
 		return ret;
 	}
 	return ret;
+}
+//
+int wiringPiI2CWrite(int fd, int data)
+{
+	return wiringJetI2CWrite(fd, data);
 }
 
 
@@ -188,6 +207,11 @@ int wiringJetI2CWriteReg8(int fd, int reg, int value)
 		return ret;
 	}
 }
+//
+int wiringPiI2CWriteReg8(int fd, int reg, int value)
+{
+	return wiringJetI2CWriteReg8(fd, reg, value);
+}
 
 
 int wiringJetI2CWriteReg16(int fd, int reg, int value)
@@ -201,6 +225,11 @@ int wiringJetI2CWriteReg16(int fd, int reg, int value)
 		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWriteReg16", "Error writing fd %d register 0x%x data %d", fd, reg, data.word);
 		return ret;
 	}
+}
+//
+int wiringPiI2CWriteReg16(int fd, int reg, int value)
+{
+	return wiringJetI2CWriteReg16(fd, reg, value);
 }
 
 
@@ -225,6 +254,7 @@ int wiringJetI2CSetupInterface(const char *device, int devId)
 }
 
 
+
 int wiringJetI2CSetup(const int bus, const int devId)
 {
 	int rev;
@@ -236,4 +266,9 @@ int wiringJetI2CSetup(const int bus, const int devId)
 		device = "/dev/i2c-1";
 	
 	return wiringJetI2CSetupInterface(device, devId) ;
+}
+//
+int wiringPiI2CSetup(const int bus, const int devId)
+{
+	return wiringJetI2CSetup(bus, devId);
 }
