@@ -28,7 +28,7 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetSPI.h"
-#include "Logging.h"
+#include "wiringJetLogging.h"
 
 #include "mcp3004.h"
 

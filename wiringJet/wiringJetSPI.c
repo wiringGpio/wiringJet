@@ -37,7 +37,7 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "Logging.h"
+#include "wiringJetLogging.h"
 
 
 // The SPI bus parameters
@@ -99,9 +99,19 @@ int wiringJetSPIDataRW(int channel, unsigned char *data, int len)
 
 int wiringJetSPISetupMode(int channel, int speed, int mode)
 {
+	//  make sure we can open SPI
+	char buf[100];
+	strcpy(buf, "modprobe spidev bufsiz=65535");
+	if (system(buf) == -1) 
+	{ 
+		Log(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "Unable to open the SPI driver.");
+		printf("not possible to load the linux spidev module (driver) \n");
+		return -12;
+	}
+	
 	int fd;
 	char spiDev[32];
-
+	
 	// Mode is 0, 1, 2 or 3
 	mode    &= 3;   	
 

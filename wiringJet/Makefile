@@ -5,7 +5,7 @@
 
 #VisualGDB: AutoSourceFiles		#<--- remove this line to disable auto-updating of SOURCEFILES and EXTERNAL_LIBS
 
-TARGETNAME := libwiringJet.so
+TARGETNAME := libwiringjet.so
 #TARGETTYPE can be APP, STATIC or SHARED
 TARGETTYPE := SHARED
 
@@ -253,5 +253,30 @@ $(BINARYDIR)/%.o : %.cc $(all_make_files) |$(BINARYDIR)
 
 $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER)F $(@:.o=.dep)
+
+
+
+HEADERS =	$(shell ls *.h)
+
+install:
+	echo "[Install Headers ...]"
+	install -m 0644 $(HEADERS) /usr/include
+
+	echo "[Install Lib ...]"
+	install -m 0755 $(BINARYDIR)/libwiringjet.so /usr/lib
+
+	echo "[Executing ldconfig ...]"
+	ldconfig
+	ldconfig -p | grep libwiringjet.so
+
+uninstall:
+	echo "[Removing Headers ...]"
+	cd /usr/include/ && rm -f $(HEADERS)
+	echo "[Removing Library ...]"
+	rm -rf /usr/lib/libwiringjet.so
+	echo "[Executing ldconfig ...]"
+	ldconfig	
+	echo "[Uninstall complete.]"
+
 
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated. Remove this line to suppress auto-generation of file rules.

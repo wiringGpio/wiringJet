@@ -20,7 +20,7 @@
         <UserName>nano</UserName>
       </RemoteHost>
       <LocalDirectory>$(ProjectDir)</LocalDirectory>
-      <RemoteDirectory>/home/nano/Source/wiringJet/wiringJet</RemoteDirectory>
+      <RemoteDirectory>/home/nano/Source/VwiringJet/wiringJet</RemoteDirectory>
       <FileMasks>
         <string>*.cpp</string>
         <string>*.h</string>

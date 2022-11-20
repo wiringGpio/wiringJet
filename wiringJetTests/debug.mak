@@ -15,7 +15,7 @@ OBJCOPY := objcopy
 PREPROCESSOR_MACROS := DEBUG=1
 INCLUDE_DIRS := ../wiringJet/
 LIBRARY_DIRS := ../wiringJet/Debug/
-LIBRARY_NAMES := wiringJet pthread
+LIBRARY_NAMES := wiringjet pthread
 ADDITIONAL_LINKER_INPUTS := 
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 

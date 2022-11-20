@@ -29,7 +29,7 @@
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
-#include "Logging.h"
+#include "wiringJetLogging.h"
 
 #include "mcp23x0817.h"
 #include "mcp23008.h"

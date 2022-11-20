@@ -20,7 +20,7 @@
         <UserName>nano</UserName>
       </RemoteHost>
       <LocalDirectory>$(ProjectDir)</LocalDirectory>
-      <RemoteDirectory>/tmp/VisualGDB/$(ProjectDirUnixStyle)</RemoteDirectory>
+      <RemoteDirectory>/home/nano/Source/VwiringJet/wiringJetTests</RemoteDirectory>
       <FileMasks>
         <string>*.cpp</string>
         <string>*.h</string>
@@ -35,8 +35,14 @@
       </FileMasks>
       <TransferNewFilesOnly>true</TransferNewFilesOnly>
       <IncludeSubdirectories>true</IncludeSubdirectories>
+      <SelectedDirectories />
       <DeleteDisappearedFiles>true</DeleteDisappearedFiles>
       <ApplyGlobalExclusionList>true</ApplyGlobalExclusionList>
+      <Extension>
+        <Direction>Outgoing</Direction>
+        <SkipMountPoints>false</SkipMountPoints>
+        <OverwriteTrigger>LocalCache</OverwriteTrigger>
+      </Extension>
     </MainSourceTransferCommand>
     <AllowChangingHostForMainCommands>false</AllowChangingHostForMainCommands>
     <SkipBuildIfNoSourceFilesChanged>false</SkipBuildIfNoSourceFilesChanged>
@@ -57,10 +63,6 @@
     <MakeConfigurationName>Release</MakeConfigurationName>
     <MakeCommandTemplate>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
-      <RemoteHost>
-        <HostName>BuildMachine</HostName>
-        <Transport>BuiltinShortcut</Transport>
-      </RemoteHost>
       <Command>$(ToolchainMake)</Command>
       <Arguments>$(ToolchainMakeArgs)</Arguments>
       <WorkingDirectory>$(BuildDir)</WorkingDirectory>
@@ -85,6 +87,7 @@
     <ShowMessageAfterExecuting>true</ShowMessageAfterExecuting>
   </CustomShortcuts>
   <UserDefinedVariables />
+  <ImportedPropertySheets />
   <CodeSense>
     <Enabled>Unknown</Enabled>
     <ExtraSettings>
@@ -97,6 +100,8 @@
       <Enabled>false</Enabled>
     </CodeAnalyzerSettings>
   </CodeSense>
+  <Configurations />
+  <ProgramArgumentsSuggestions />
   <Debug xsi:type="com.visualgdb.debug.remote">
     <AdditionalStartupCommands />
     <AdditionalGDBSettings>

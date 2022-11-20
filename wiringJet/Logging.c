@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <stdarg.h>
-#include "Logging.h"
+#include "wiringJetLogging.h"
 
 
 LoggingCallback LogFunction = 0x00;

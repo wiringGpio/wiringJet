@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ads1115.h" />
-    <ClInclude Include="Logging.h" />
+    <ClInclude Include="wiringJetLogging.h" />
     <ClInclude Include="mcp23008.h" />
     <ClInclude Include="mcp23017.h" />
     <ClInclude Include="mcp23x0817.h" />

@@ -179,6 +179,9 @@
 #ifndef __FLT_EVAL_METHOD_TS_18661_3__
 #define __FLT_EVAL_METHOD_TS_18661_3__ 0
 #endif
+#ifndef __OPTIMIZE__
+#define __OPTIMIZE__ 1
+#endif
 #ifndef __CHAR_UNSIGNED__
 #define __CHAR_UNSIGNED__ 1
 #endif
@@ -227,11 +230,17 @@
 #ifndef __FLT64X_MANT_DIG__
 #define __FLT64X_MANT_DIG__ 113
 #endif
+#ifndef _FORTIFY_SOURCE
+#define _FORTIFY_SOURCE 2
+#endif
 #ifndef __SIZEOF_INT__
 #define __SIZEOF_INT__ 4
 #endif
 #ifndef __SIZEOF_POINTER__
 #define __SIZEOF_POINTER__ 8
+#endif
+#ifndef NDEBUG
+#define NDEBUG 1
 #endif
 #ifndef __GCC_ATOMIC_CHAR16_T_LOCK_FREE
 #define __GCC_ATOMIC_CHAR16_T_LOCK_FREE 2
@@ -313,6 +322,9 @@
 #endif
 #ifndef __FLT64_MIN_EXP__
 #define __FLT64_MIN_EXP__ (-1021)
+#endif
+#ifndef RELEASE
+#define RELEASE 1
 #endif
 #ifndef __FLT64X_MIN_10_EXP__
 #define __FLT64X_MIN_10_EXP__ (-4931)
@@ -558,9 +570,6 @@
 #endif
 #ifndef __UINT8_TYPE__
 #define __UINT8_TYPE__ unsigned char
-#endif
-#ifndef __NO_INLINE__
-#define __NO_INLINE__ 1
 #endif
 #ifndef __FLT_MANT_DIG__
 #define __FLT_MANT_DIG__ 24
@@ -1168,12 +1177,6 @@
 #ifndef __ATOMIC_RELEASE
 #define __ATOMIC_RELEASE 3
 #endif
-#ifndef NDEBUG
-#define NDEBUG 1
-#endif
-#ifndef RELEASE
-#define RELEASE 1
-#endif
 #endif
 
 // --- Include directories begin --- //
@@ -1185,6 +1188,7 @@
 ///usr/lib/gcc/aarch64-linux-gnu/7/include-fixed
 ///usr/include/aarch64-linux-gnu
 ///usr/include
+//../wiringJet
 // --- Include directories end --- //
 
 

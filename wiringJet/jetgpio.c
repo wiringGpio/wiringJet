@@ -49,7 +49,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <linux/gpio.h>
 #include <pthread.h>
 
-#include "Logging.h"
+#include "wiringJetLogging.h"
 
 //  Definitions from jetgpio.h
 //

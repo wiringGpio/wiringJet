@@ -20,7 +20,7 @@
         <UserName>nano</UserName>
       </RemoteHost>
       <LocalDirectory>$(ProjectDir)</LocalDirectory>
-      <RemoteDirectory>/home/nano/Source/wiringJet/wiringJetTests</RemoteDirectory>
+      <RemoteDirectory>/home/nano/Source/VwiringJet/wiringJetTests</RemoteDirectory>
       <FileMasks>
         <string>*.cpp</string>
         <string>*.h</string>
@@ -138,7 +138,7 @@
     <LaunchGDBSettings xsi:type="GDBLaunchParametersNewInstance">
       <DebuggedProgram>$(TargetPath)</DebuggedProgram>
       <GDBServerPort>2000</GDBServerPort>
-      <ProgramArguments>mcp23017</ProgramArguments>
+      <ProgramArguments>mcp3008</ProgramArguments>
       <ArgumentEscapingMode>Auto</ArgumentEscapingMode>
     </LaunchGDBSettings>
     <GenerateCtrlBreakInsteadOfCtrlC>false</GenerateCtrlBreakInsteadOfCtrlC>

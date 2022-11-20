@@ -5,3 +5,5 @@ wiringJet/Debug
 *.user
 wiringJetTests/Debug
 ._.gitignore
+gcc_Debug.h
+gcc_Release.h

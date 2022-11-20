@@ -91,7 +91,7 @@
     <ClInclude Include="wiringJetI2C.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="Logging.h">
+    <ClInclude Include="wiringJetLogging.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="wiringJetSPI.h">

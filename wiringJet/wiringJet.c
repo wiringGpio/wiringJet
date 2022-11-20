@@ -39,7 +39,7 @@
 
 #include "wiringJet.h"
 #include "wiringJetImplementation.h"
-#include "Logging.h"
+#include "wiringJetLogging.h"
 
 #pragma region Logging
 
