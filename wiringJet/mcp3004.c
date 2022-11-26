@@ -26,7 +26,6 @@
  */
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 #include "wiringJetSPI.h"
 
 #include "mcp3004.h"
@@ -48,7 +47,7 @@ static int myAnalogRead(struct wiringJetNodeStruct *node, int pin)
 	spiData[1] = chanBits;
 	spiData[2] = 0;
 
-	wiringJetSPIDataRW(node->fd, spiData, 3);
+	wiringJetSPIDataRW(node->data0, spiData, 3);
 
 	return ((spiData[1] << 8) | spiData[2]) & 0x3FF ;
 }
@@ -76,7 +75,8 @@ int mcp3004Setup(const int pinBase, int spiChannel)
 
 	LogFormatted(LogLevelInfo, "mcp3004.c", "mcp3004Setup", "Created MCP3004 on channel %d. Pin base %d. File Descriptor (fd) %d", spiChannel, pinBase, fd);
 
-	node->fd         = spiChannel;
+	node->fd = fd;
+	node->data0         = spiChannel;
 	node->analogRead = myAnalogRead;
 	
 	return fd ;
@@ -105,7 +105,8 @@ int mcp3008Setup(const int pinBase, int spiChannel)
 
 	LogFormatted(LogLevelInfo, "mcp3004.c", "mcp3008Setup", "Created MCP3008 on channel %d. Pin base %d. File Descriptor (fd) %d", spiChannel, pinBase, fd);
 
-	node->fd         = spiChannel;
+	node->fd = fd;
+	node->data0         = spiChannel;
 	node->analogRead = myAnalogRead;
 	return fd ;
 }

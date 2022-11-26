@@ -77,7 +77,7 @@ error:
 endif
 
 SOURCEFILES := TestGpioPwmOutput.cpp TestISR.cpp TestMcp23017.cpp TestMcp3008.cpp TestPinInput.cpp wiringJetTests.cpp TestAds1115.cpp TestMcp23008.cpp TestPca9685.cpp TestPinOutput.cpp
-EXTERNAL_LIBS := ../wiringJet/$(BINARYDIR)/libwiringjet.so
+EXTERNAL_LIBS := ../wiringJet/$(BINARYDIR)/libwiringJet.so
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
 CFLAGS += $(COMMONFLAGS)
@@ -255,6 +255,6 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER)F $(@:.o=.dep)
 
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated. Remove this line to suppress auto-generation of file rules.
-$(BINARYDIR)/libwiringjet.so : ../wiringJet/$(BINARYDIR)/libwiringjet.so
-	$(CP) ../wiringJet/$(BINARYDIR)/libwiringjet.so $(BINARYDIR)/libwiringjet.so
+$(BINARYDIR)/libwiringJet.so : ../wiringJet/$(BINARYDIR)/libwiringJet.so
+	$(CP) ../wiringJet/$(BINARYDIR)/libwiringJet.so $(BINARYDIR)/libwiringJet.so
 

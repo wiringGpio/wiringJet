@@ -5,7 +5,7 @@
 
 #VisualGDB: AutoSourceFiles		#<--- remove this line to disable auto-updating of SOURCEFILES and EXTERNAL_LIBS
 
-TARGETNAME := libwiringjet.so
+TARGETNAME := libwiringJet.so
 #TARGETTYPE can be APP, STATIC or SHARED
 TARGETTYPE := SHARED
 
@@ -263,17 +263,17 @@ install:
 	install -m 0644 $(HEADERS) /usr/include
 
 	echo "[Install Lib ...]"
-	install -m 0755 $(BINARYDIR)/libwiringjet.so /usr/lib
+	install -m 0755 $(BINARYDIR)/libwiringJet.so /usr/lib
 
 	echo "[Executing ldconfig ...]"
 	ldconfig
-	ldconfig -p | grep libwiringjet.so
+	ldconfig -p | grep libwiringJet.so
 
 uninstall:
 	echo "[Removing Headers ...]"
 	cd /usr/include/ && rm -f $(HEADERS)
 	echo "[Removing Library ...]"
-	rm -rf /usr/lib/libwiringjet.so
+	rm -rf /usr/lib/libwiringJet.so
 	echo "[Executing ldconfig ...]"
 	ldconfig	
 	echo "[Uninstall complete.]"

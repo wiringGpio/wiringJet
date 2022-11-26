@@ -85,9 +85,6 @@
     <ClInclude Include="pca9685.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="wiringJetImplementation.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="wiringJetI2C.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -98,6 +95,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="mcp23017.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="wiringGpioLogging.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

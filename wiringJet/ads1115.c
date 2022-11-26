@@ -40,7 +40,6 @@
 #include <unistd.h>
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
 
 #include "ads1115.h"

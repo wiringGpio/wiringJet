@@ -18,12 +18,10 @@ int testFailures = 0;
 
 //  Get string for log level
 //
-string LogLevelString(LogLevel level)
+string LogLevelString(wiringGpioLogLevel level)
 {
 	switch (level)
 	{
-	case LogLevelVerbose:
-		return "VERBOSE";
 	case 	LogLevelTrace:
 		return "TRACE";
 	case LogLevelDebug:
@@ -44,7 +42,7 @@ string LogLevelString(LogLevel level)
 
 //  Write the log to the console
 //
-void LoggingFunction(LogEvent log)
+void LoggingFunction(wiringGpioLogEvent log)
 {
 	timeval logTime;
 	double seconds;
@@ -78,11 +76,11 @@ unsigned long long GetUnixTimeMilliseconds()
 
 //  Log function for the test app
 //
-void Log(LogLevel level, const char* sender, const char* function, const char* data)
+void Log(wiringGpioLogLevel level, const char* sender, const char* function, const char* data)
 {
 	if (LogFunction && level >= LoggingLevel)
 	{
-		LogEvent logItem;
+		wiringGpioLogEvent logItem;
 		logItem.LogUnixTimeMilliseconds = GetUnixTimeMilliseconds();
 		logItem.Level = level;
 		logItem.Thread = 0;
@@ -97,7 +95,7 @@ void Log(LogLevel level, const char* sender, const char* function, const char* d
 
 //  Log function for the test app with string format
 //
-void LogFormatted(LogLevel level, const char* sender, const char* function, const char* format, ...)
+void LogFormatted(wiringGpioLogLevel level, const char* sender, const char* function, const char* format, ...)
 {
 	if (LogFunction && level >= LoggingLevel)
 	{
@@ -120,9 +118,9 @@ void LogFormatted(LogLevel level, const char* sender, const char* function, cons
 
 
 //  Logging callback function
-LoggingCallback LogFunction = 0x00;
+wiringGpioLoggingCallback LogFunction = 0x00;
 //  Log level
-LogLevel LoggingLevel = LogLevelAll;
+wiringGpioLogLevel LoggingLevel = LogLevelAll;
 
 #pragma endregion	//  Logging
 

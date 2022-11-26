@@ -60,11 +60,11 @@ int testISR(int argc, char *argv[])
 		usleep(callbackDelayUSeconds);
 		if (valueOne && !valueTwo)
 		{
-			LogFormatted(LogLevelDebug, "TestPinInput.cpp", "testPinInput", "Rising Edge: Pin %d callback true and pin %d callback false.", input1, input2);
+			LogFormatted(LogLevelDebug, "TestISR.cpp", "testISR", "Rising Edge: Pin %d callback true and pin %d callback false.", input1, input2);
 		}
 		else
 		{
-			LogFormatted(LogLevelError, "TestPinInput.cpp", "testPinInput", "Callback error: valueOne %d value2 %d.", valueOne, valueTwo);
+			LogFormatted(LogLevelError, "TestISR.cpp", "testISR", "Callback error: valueOne %d value2 %d.", valueOne, valueTwo);
 		}
 		usleep(100000);
 		
@@ -72,11 +72,11 @@ int testISR(int argc, char *argv[])
 		usleep(callbackDelayUSeconds);
 		if (valueOne && valueTwo)
 		{
-			LogFormatted(LogLevelDebug, "TestPinInput.cpp", "testPinInput", "Falling Edge: Pin %d callback true and pin %d callback true.", input1, input2);
+			LogFormatted(LogLevelDebug, "TestISR.cpp", "testISR", "Falling Edge: Pin %d callback true and pin %d callback true.", input1, input2);
 		}
 		else
 		{
-			LogFormatted(LogLevelError, "TestPinInput.cpp", "testPinInput", "Callback error: valueOne %d value2 %d.", valueOne, valueTwo);
+			LogFormatted(LogLevelError, "TestISR.cpp", "testISR", "Callback error: valueOne %d value2 %d.", valueOne, valueTwo);
 		}
 		usleep(1000000);
 	

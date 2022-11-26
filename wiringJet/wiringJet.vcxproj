@@ -98,9 +98,9 @@
     <ClInclude Include="mcp23x0817.h" />
     <ClInclude Include="mcp3004.h" />
     <ClInclude Include="pca9685.h" />
+    <ClInclude Include="wiringGpioLogging.h" />
     <ClInclude Include="wiringJet.h" />
     <ClInclude Include="wiringJetI2C.h" />
-    <ClInclude Include="wiringJetImplementation.h" />
     <ClInclude Include="wiringJetSPI.h" />
   </ItemGroup>
 </Project>

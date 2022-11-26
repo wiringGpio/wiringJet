@@ -57,7 +57,6 @@
 #include <asm/ioctl.h>
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
 
 // I2C definitions
@@ -120,11 +119,11 @@ int wiringJetI2CRead(int fd)
 {
 	union i2c_smbus_data data;
 
-	int ret = i2c_smbus_access(fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data);
-	if (ret < 0)
+	int ret = -1;
+	if ((ret = i2c_smbus_access(fd, I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CRead", "Error reading fd %d.", fd);
-		return -1;
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CRead", "Error reading fd %d. Error code %d.", fd, ret);
+		return ret;
 	}
 	else
 	{
@@ -142,10 +141,10 @@ int wiringJetI2CReadReg8(int fd, int reg)
 {
 	union i2c_smbus_data data;
 
-	int ret = i2c_smbus_access(fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA, &data);
-	if (ret < 0)
+	int ret = -1;
+	if ((ret = i2c_smbus_access(fd, I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA, &data)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CReadReg8", "Error reading fd %d register 0x%x.", fd, reg);
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CReadReg8", "Error reading fd %d register 0x%x.  Error code %d.", fd, reg, ret);
 		return ret;
 	}
 	else
@@ -162,10 +161,10 @@ int wiringJetI2CReadReg16(int fd, int reg)
 {
 	union i2c_smbus_data data;
 
-	int ret = i2c_smbus_access(fd, I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA, &data);
-	if (ret < 0)
+	int ret = -1;
+	if ((ret = i2c_smbus_access(fd, I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA, &data)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CReadReg16", "Error reading fd %d register 0x%x.", fd, reg);
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CReadReg16", "Error reading fd %d register 0x%x. Error code %d.", fd, reg, ret);
 		return ret;
 	}
 	else
@@ -180,11 +179,10 @@ int wiringPiI2CReadReg16(int fd, int reg)
 
 int wiringJetI2CWrite(int fd, int data)
 {
-	int ret = i2c_smbus_access(fd, I2C_SMBUS_WRITE, data, I2C_SMBUS_BYTE, NULL);
-	if (ret < 0)
+	int ret = -1;
+	if ((ret = i2c_smbus_access(fd, I2C_SMBUS_WRITE, data, I2C_SMBUS_BYTE, NULL)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWrite", "Error writing fd %d data %d", fd, data);
-		return ret;
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWrite", "Error writing fd %d data %d.  Error code %d.", fd, data, ret);
 	}
 	return ret;
 }
@@ -200,12 +198,12 @@ int wiringJetI2CWriteReg8(int fd, int reg, int value)
 	union i2c_smbus_data data ;
 
 	data.byte = value;
-	int ret = i2c_smbus_access(fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BYTE_DATA, &data);
-	if (ret < 0)
+	int ret = -1;
+	if ((ret = i2c_smbus_access(fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BYTE_DATA, &data)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWriteReg8", "Error writing fd %d register 0x%x data %d", fd, reg, data.byte);
-		return ret;
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWriteReg8", "Error writing fd %d register 0x%x data %d.  Error code %d.", fd, reg, data.byte, ret);
 	}
+	return ret;
 }
 //
 int wiringPiI2CWriteReg8(int fd, int reg, int value)
@@ -219,12 +217,12 @@ int wiringJetI2CWriteReg16(int fd, int reg, int value)
 	union i2c_smbus_data data ;
 
 	data.word = value;
-	int ret = i2c_smbus_access(fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_WORD_DATA, &data);
-	if (ret < 0)
+	int ret = -1;
+	if ((ret =  i2c_smbus_access(fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_WORD_DATA, &data)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWriteReg16", "Error writing fd %d register 0x%x data %d", fd, reg, data.word);
-		return ret;
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CWriteReg16", "Error writing fd %d register 0x%x data %d. Error code %d.", fd, reg, data.byte, ret);
 	}
+	return ret;
 }
 //
 int wiringPiI2CWriteReg16(int fd, int reg, int value)
@@ -239,17 +237,18 @@ int wiringJetI2CSetupInterface(const char *device, int devId)
 
 	if ((fd = open(device, O_RDWR)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Unable to open I2C device: %s.", strerror(errno));
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Unable to open I2C device: %s id 0x%x. Error code %d: %s.", device, devId, fd, strerror(errno));
 		return -1;
 	}
 
-	if (ioctl(fd, I2C_SLAVE, devId) < 0)
+	int ret = -1;
+	if ((ret = ioctl(fd, I2C_SLAVE, devId)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Unable to select I2C device: %s.", strerror(errno));
+		LogFormatted(LogLevelError, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Unable to select I2C device:%s id 0x%x. Error code %d: %s.", device, devId, ret, strerror(errno));
 		return -1;
 	}
 
-	LogFormatted(LogLevelDebug, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Setup I2C interface %s 0x%x.", device, devId);
+	LogFormatted(LogLevelInfo, "wiringJetI2C.c", "wiringJetI2CSetupInterface", "Setup I2C interface %s 0x%x. File Descriptor (fd) %d.", device, devId, fd);
 	return fd ;
 }
 

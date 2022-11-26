@@ -1,14 +1,14 @@
 #pragma once
 
 // Logging Callback
-extern LoggingCallback LogFunction;
+extern wiringGpioLoggingCallback LogFunction;
 
 //  Log Level
-extern LogLevel LoggingLevel;
+extern wiringGpioLogLevel LoggingLevel;
 
 //  Add a log to the program logging
-void Log(LogLevel level, const char* sender, const char* function, const char* data);
-void LogFormatted(LogLevel level, const char* sender, const char* function, const char* format, ...);
+void Log(wiringGpioLogLevel level, const char* sender, const char* function, const char* data);
+void LogFormatted(wiringGpioLogLevel level, const char* sender, const char* function, const char* format, ...);
 
 
 int testPinOutput(int argc, char *argv[]);

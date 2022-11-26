@@ -27,7 +27,6 @@
 #include <pthread.h>
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
 
 #include "mcp23x0817.h"

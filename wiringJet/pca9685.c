@@ -28,7 +28,6 @@
 #include <unistd.h>
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
 
 #include "pca9685.h"
@@ -50,6 +49,8 @@ static void myOnOffWrite(struct wiringJetNodeStruct *node, int pin, int value);
 static int myOffRead(struct wiringJetNodeStruct *node, int pin);
 static int myOnRead(struct wiringJetNodeStruct *node, int pin);
 static void myPwmSetFrequency(struct wiringJetNodeStruct* node, float value);
+static int myPwmGetRange(struct wiringJetNodeStruct* node, int pin);
+
 int baseReg(int pin);
 
 
@@ -88,12 +89,13 @@ int pca9685Setup(const int bus, const int pinBase, const int i2cAddress, float f
 		pca9685PWMFreq(fd, freq);
 	
 
-	node->fd			= fd;
-	node->pwmWrite		= myPwmWrite;
-	node->digitalWrite	= myOnOffWrite;
-	node->digitalRead	= myOffRead;
-	node->analogRead	= myOnRead;
-	node->pwmSetFrequency = myPwmSetFrequency;
+	node->fd				= fd;
+	node->pwmWrite			= myPwmWrite;
+	node->digitalWrite		= myOnOffWrite;
+	node->digitalRead		= myOffRead;
+	node->analogRead		= myOnRead;
+	node->pwmSetFrequency	= myPwmSetFrequency;
+	node->pwmGetRange		= myPwmGetRange;
 
 	return fd;
 }
@@ -300,13 +302,23 @@ static int myOnRead(struct wiringJetNodeStruct *node, int pin)
 }
 
 /**
- * Added myPwmSetFrequency with implementation for Nvidia Jetson
+ * Set the frequency of a pin
  */
 static void myPwmSetFrequency(struct wiringJetNodeStruct *node, float value) 
 {
 	int fd = node->fd;
 	
 	pca9685PWMFreq(fd, value);
+}
+
+
+/*
+ * Get the range of the PWM
+ */
+static int myPwmGetRange(struct wiringJetNodeStruct *node, int pin)
+{
+	//  range is 4096 for all pins
+	return 4096;
 }
 
 

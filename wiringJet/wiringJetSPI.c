@@ -35,7 +35,6 @@
 #include <linux/spi/spidev.h>
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 #include "wiringJetI2C.h"
 
 
@@ -84,7 +83,12 @@ int wiringJetSPIDataRW(int channel, unsigned char *data, int len)
 	spi.speed_hz      = spiSpeeds[channel];
 	spi.bits_per_word = spiBPW;
 
-	return ioctl(spiFds[channel], SPI_IOC_MESSAGE(1), &spi);
+	int ret = -1;
+	if ((ret = ioctl(spiFds[channel], SPI_IOC_MESSAGE(1), &spi)) < 0)
+	{
+		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPIDataRW", "Unable to read/write SPI channel %d. Error %d.", channel, ret);
+	}
+	return ret;
 }
 //
 int wiringPiSPIDataRW(int channel, unsigned char *data, int len)
@@ -106,7 +110,6 @@ int wiringJetSPISetupMode(int channel, int speed, int mode)
 	if (system(buf) == -1) 
 	{ 
 		Log(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "Unable to open the SPI driver.");
-		printf("not possible to load the linux spidev module (driver) \n");
 		return -12;
 	}
 	
@@ -121,8 +124,8 @@ int wiringJetSPISetupMode(int channel, int speed, int mode)
 	snprintf(spiDev, 31, "/dev/spidev0.%d", channel);
 	if ((fd = open(spiDev, O_RDWR)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "Unable to open SPI device: %s", strerror(errno));
-		return -1;
+		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "Unable to open the SPI channel %d in mode %d. Error %d: %s.", channel, mode, fd, strerror(errno));
+		return fd;
 	}
 
 	spiSpeeds[channel] = speed;
@@ -130,24 +133,23 @@ int wiringJetSPISetupMode(int channel, int speed, int mode)
 
 	// Set SPI parameters.
 
-	  if(ioctl(fd, SPI_IOC_WR_MODE, &mode) < 0)
+	int ret = -1;
+	if ((ret = ioctl(fd, SPI_IOC_WR_MODE, &mode)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "SPI Mode Change failure: %s\n", strerror(errno));
+		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "SPI Mode Change failure channel %d. Error %d: %s.", channel, ret, strerror(errno));
 		return -1;
 	}
 	
-    
-	if (ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &spiBPW) < 0)
+	if ((ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &spiBPW)) < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "SPI BPW Change failure: %s\n", strerror(errno));
-		return -1;
+		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "SPI BPW Change failure channel %d: Error %d: %s.", channel, ret, strerror(errno));
+		return ret;
 	}
-    
-
+   
 	if (ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed)   < 0)
 	{
-		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "SPI Speed Change failure: %s\n", strerror(errno));
-		return -1;
+		LogFormatted(LogLevelError, "wiringJetSPI.c", "wiringJetSPISetupMode", "SPI Speed Change failure channel %d: Error %d: %s.", channel, ret, strerror(errno));
+		return ret;
 	}
 	  
 	return fd;

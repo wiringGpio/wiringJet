@@ -38,16 +38,18 @@
 #include <errno.h>
 
 #include "wiringJet.h"
-#include "wiringJetImplementation.h"
 
+
+//  Logging
+//
 #pragma region Logging
 
-void wiringJetSetLoggingCallback(LoggingCallback function)
+void wiringJetSetLoggingCallback(wiringGpioLoggingCallback function)
 {
 	LogFunction = function;
 }
 
-void wiringJetSetLoggingLevel(LogLevel level)
+void wiringJetSetLoggingLevel(wiringGpioLogLevel level)
 {
 	LoggingLevel = level;
 }
@@ -55,8 +57,9 @@ void wiringJetSetLoggingLevel(LogLevel level)
 #pragma endregion
 
 
-#define	UNU	__attribute__((unused))
 
+//  Node Management
+//
 #pragma region NodeManagement
 
 struct wiringJetNodeStruct* jetGpioNodes = NULL;
@@ -65,13 +68,15 @@ struct wiringJetNodeStruct* jetGpioNodes = NULL;
  *	Create a new GPIO node into the wiringPi handling system
  *********************************************************************************
  */
-
+#define	UNU	__attribute__((unused))
+/**/
 static         void pinModeDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int mode)  { return ; }
 static         void pullUpDnControlDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int pud)   { return ; }
 static          int digitalReadDummy(UNU struct wiringJetNodeStruct *node, UNU int UNU pin)            { return 0 ; }
 static         void digitalWriteDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static         void pwmWriteDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static         void pwmSetFrequencyDummy(UNU struct wiringJetNodeStruct *node, UNU float value) { return; }
+static			int pwmGetRangeDummy(UNU struct wiringJetNodeStruct *node, UNU int pin) {return 0;}
 static          int analogReadDummy(UNU struct wiringJetNodeStruct *node, UNU int pin)            { return 0 ; }
 static         void analogWriteDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int value) { return ; }
 
@@ -111,18 +116,19 @@ struct wiringJetNodeStruct *wiringJetNewNode(int pinBase, int numPins)
 		return NULL;
 	}
 
-	node->pinBase          = pinBase;
-	node->pinMax           = pinBase + numPins - 1;
-	node->pinMode          = pinModeDummy;
-	node->pullUpDnControl  = pullUpDnControlDummy;
-	node->digitalRead      = digitalReadDummy;
-	node->digitalWrite     = digitalWriteDummy;
-	node->pwmWrite         = pwmWriteDummy;
+	node->pinBase			= pinBase;
+	node->pinMax			= pinBase + numPins - 1;
+	node->pinMode			= pinModeDummy;
+	node->pullUpDnControl	= pullUpDnControlDummy;
+	node->digitalRead		= digitalReadDummy;
+	node->digitalWrite		= digitalWriteDummy;
+	node->pwmWrite			= pwmWriteDummy;
 	node->pwmSetFrequency	= pwmSetFrequencyDummy;
-	node->analogRead       = analogReadDummy;
-	node->analogWrite      = analogWriteDummy;
-	node->next             = jetGpioNodes;
-	jetGpioNodes          = node;
+	node->pwmGetRange		= pwmGetRangeDummy;
+	node->analogRead		= analogReadDummy;
+	node->analogWrite		= analogWriteDummy;
+	node->next				= jetGpioNodes;
+	jetGpioNodes			= node;
 
 	return node ;
 }
@@ -146,6 +152,40 @@ struct wiringJetNodeStruct *wiringJetFindNode(int pin)
 			node = node->next;
 
 	return NULL ;
+};
+
+
+/*
+ * wiringJetGetPinBaseForNode
+ * Find the pin base for a given pin number
+ **/
+int wiringJetGetPinBaseForNode(int pin)
+{ 
+	struct wiringJetNodeStruct *nodeExists = wiringJetFindNode(pin);
+	if (nodeExists != NULL)
+		return nodeExists->pinBase;
+	else
+		return -1;
+}
+//
+int wiringPiGetPinBaseForNode(int pin)
+{
+	return wiringJetGetPinBaseForNode(pin);
+}
+
+extern int wiringJetGetFileDescriptorForNode(int pin)
+{
+	struct wiringJetNodeStruct *nodeExists = wiringJetFindNode(pin);
+	if (nodeExists != NULL)
+		return nodeExists->fd;
+	else
+		return -1;
+}
+
+
+extern int wiringPiGetFileDescriptorForNode(int pin)
+{
+	return wiringJetGetFileDescriptorForNode(pin);
 }
 
 #pragma endregion 
@@ -174,6 +214,11 @@ int wiringJetSetupPhys()
 	return gpioInitialise();
 }
 
+int wiringPiSetupPhys()
+{
+	return wiringJetSetupPhys();
+}
+
 
 //  ShutDown
 //
@@ -183,13 +228,19 @@ void wiringJetTerminate()
 }
 	
 
+//  Pin Mode Alt
+//
+void pinModeAlt(int pin, int mode)
+{
+	Log(LogLevelFatal, "wiringJet.c", "pinModeAlt", "Not implemented");
+}
+
+
 //  Pin Mode
 //
 void pinMode(int pin, int mode)
 {
 	LogFormatted(LogLevelInfo, "wiringJet.c", "pinMode", "Setting pin %d to mode %d", pin, mode);
-	
-	struct wiringJetNodeStruct *node = jetGpioNodes;
 	if (pin <= 40)		
 	{
 		//  read the carrier board device pin
@@ -198,11 +249,20 @@ void pinMode(int pin, int mode)
 	else
 	{
 		//  read the external pin if it exists
+		struct wiringJetNodeStruct *node = NULL;
 		if((node = wiringJetFindNode(pin)) != NULL)
 		{
 			node->pinMode(node, pin, mode);
 		}
 	}
+}
+
+
+//  Set pull up / down control
+//		- not implemented in wiringJet
+void pullUpDnControl(int pin, int pud)
+{
+	Log(LogLevelFatal, "wiringJet.c", "pullUpDnControl", "Not implemented");
 }
 
 
@@ -218,7 +278,7 @@ int  digitalRead(int pin)
 	else
 	{
 		//  read the external pin if it exists
-		struct wiringJetNodeStruct *node = jetGpioNodes;
+		struct wiringJetNodeStruct *node = NULL;
 		if ((node = wiringJetFindNode(pin)) != NULL)
 		{
 			return node->digitalRead(node, pin) ;
@@ -240,7 +300,7 @@ void digitalWrite(int pin, int value)
 	else
 	{
 		//  write to the external pin if it exists
-		struct wiringJetNodeStruct* node = jetGpioNodes;
+		struct wiringJetNodeStruct* node = NULL;
 		if ((node = wiringJetFindNode(pin)) != NULL)
 		{
 			node->digitalWrite(node, pin, value);
@@ -261,7 +321,7 @@ int pwmSetFrequency(int pin, float frequency)
 	}
 	else
 	{
-		struct wiringJetNodeStruct* node = jetGpioNodes;
+		struct wiringJetNodeStruct* node = NULL;
 		if ((node = wiringJetFindNode(pin)) != NULL)
 		{
 			node->pwmSetFrequency(node, frequency);
@@ -281,21 +341,86 @@ void pwmWrite(int pin, int value)
 	}
 	else
 	{
-		struct wiringJetNodeStruct* node = jetGpioNodes;
+		struct wiringJetNodeStruct* node = NULL;
 		if ((node = wiringJetFindNode(pin)) != NULL)
 		{
 			node->pwmWrite(node, pin, value);
 		}
 	}
 }
+
+
+void pwmWriteUnit(int pin, float value)
+{
+	if (pin < 40)
+	{
+		int rangeValue = 255* value;
+		gpioPWM(pin, rangeValue);	
+	}
+	else
+	{
+		struct wiringJetNodeStruct* node = NULL;
+		if ((node = wiringJetFindNode(pin)) != NULL)
+		{
+			int rangeValue = node->pwmGetRange(node, pin) * value;
+			node->pwmWrite(node, pin, rangeValue);
+		}
+	}
+}
 	
+//  Get the PWM range for the given pin
+//
+int pwmGetRange(int pin)
+{
+	if (pin < 40)
+	{
+		switch (pin)
+		{
+		case 32:
+		case 33:
+			return 255;
+		default:
+			return 0;
+		}
+	}
+	else
+	{
+		struct wiringJetNodeStruct* node = NULL;
+		if ((node = wiringJetFindNode(pin)) != NULL)
+		{
+			return node->pwmGetRange(node, pin);
+		}
+		return 0;
+	}
+}
+
+
+	
+extern int  softPwmCreate(int pin, int value, int range)
+{
+	Log(LogLevelFatal, "wiringJet.c", "softPwmCreate", "Not implemented");
+	return -1;
+}
+	
+extern void softPwmWrite(int pin, int value)
+{
+	Log(LogLevelFatal, "wiringJet.c", "softPwmWrite", "Not implemented");
+}	
+	
+extern void softPwmStop(int pin)
+{
+	Log(LogLevelFatal, "wiringJet.c", "softPwmStop", "Not implemented");
+}	
+	
+
+
 
 //  Analog Read
 //
 int  analogRead(int pin)
 {
 	//  read the external pin if it exists
-	struct wiringJetNodeStruct *node = jetGpioNodes;
+	struct wiringJetNodeStruct *node = NULL;
 	if ((node = wiringJetFindNode(pin)) != NULL)
 	{
 		return node->analogRead(node, pin) ;
@@ -304,11 +429,24 @@ int  analogRead(int pin)
 }
 
 
+//  Analog Write
+//
+void analogWrite(int pin, int value)
+{
+	//  read the external pin if it exists
+	struct wiringJetNodeStruct *node = NULL;
+	if ((node = wiringJetFindNode(pin)) != NULL)
+	{
+		node->analogWrite(node, pin,value);
+	}
+}
+
+
 //  Wait for Interrupt
 //
 int  waitForInterrupt(int pin, int mS)
 {
-	Log(LogLevelError, "wiringJet.c", "waitForInterrupt", "not implemented");
+	Log(LogLevelFatal, "wiringJet.c", "waitForInterrupt", "Not implemented");
 	return -1;
 }
 

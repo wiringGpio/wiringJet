@@ -30,8 +30,8 @@
 #include "wiringJet.h"
 
 
-LoggingCallback LogFunction = 0x00;
-LogLevel LoggingLevel = LogLevelAll;
+wiringGpioLoggingCallback LogFunction = 0x00;
+wiringGpioLogLevel LoggingLevel = LogLevelAll;
 
 
 //  Get the unix time in long long milliseconds
@@ -47,11 +47,11 @@ unsigned long long GetUnixTimeMilliseconds()
 
 //  Log Function
 //
-void Log(LogLevel level, const char* sender, const char* function, const char* data)
+void Log(wiringGpioLogLevel level, const char* sender, const char* function, const char* data)
 {
 	if (LogFunction)
 	{
-		LogEvent logItem;
+		wiringGpioLogEvent logItem;
 		logItem.LogUnixTimeMilliseconds = GetUnixTimeMilliseconds();
 		logItem.Level = level;
 		logItem.Thread = 0;
@@ -67,7 +67,7 @@ void Log(LogLevel level, const char* sender, const char* function, const char* d
 
 //  Log function with string format
 //
-void LogFormatted(LogLevel level, const char* sender, const char* function, const char* format, ...)
+void LogFormatted(wiringGpioLogLevel level, const char* sender, const char* function, const char* format, ...)
 {
 	if (LogFunction)
 	{
