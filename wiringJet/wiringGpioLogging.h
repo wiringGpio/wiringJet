@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WIRINGGPIOLOGGING_H
+#define WIRINGGPIOLOGGING_H
 
 
 //  Log Levels
@@ -32,3 +33,5 @@ typedef struct
 //  Logging Callback
 //
 typedef void(*wiringGpioLoggingCallback)(wiringGpioLogEvent);
+
+#endif

@@ -35,6 +35,10 @@
  ***********************************************************************
  */
 
+//  Logging Defines
+#include "wiringGpioLogging.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -44,9 +48,13 @@ extern "C" {
 #pragma region Defines
 
 //  Pin Mode
-#define	INPUT			(0)
-#define	OUTPUT			(1)
-#define	PWM_OUTPUT		(2)
+#define	INPUT				(0)
+#define	OUTPUT				(1)
+#define	PWM_OUTPUT			(2)
+#define	GPIO_CLOCK			(3)
+#define	SOFT_PWM_OUTPUT		(4)
+#define	SOFT_TONE_OUTPUT	(5)
+#define	PWM_TONE_OUTPUT		(6)
 
 //  Pin Digital Value
 #define	LOW				(0)
@@ -79,9 +87,15 @@ extern "C" {
 	extern int wiringJetSetupPhys();
 	extern int wiringPiSetupPhys();
 	
+	//  not supported wiringPi setup modes
+	extern int  wiringPiSetup(void);
+	extern int  wiringPiSetupSys(void);
+	extern int  wiringPiSetupGpio(void);
+	
 	//  Tear Down Function
 	//    It is recommended to call terminate function when your program exits
 	extern void wiringJetTerminate();
+	extern void wiringPiTerminate();
 
 	//  GPIO Pin Control
 	
@@ -105,19 +119,47 @@ extern "C" {
 	//		Set the pin to be LOW (0) or HIGH (1)
 	extern          void digitalWrite(int pin, int value);
 	
+	// Read analog value from the pin
+	//		The Jetson does not have built in ADC.
+	//		This function is used I2C or SPI devices with this feature.
+	extern          int  analogRead(int pin);
+
+	//  Write multi bit value to the pin
+	//		The Jetson does not have built in analog hardware.
+	//		This function is used by I2C or SPI devices with this feature.
+	extern          void analogWrite(int pin, int value);
 		
-	//  Set PWM Frequency
-	//		Set the PWM frequency for the pin, valid only for pins that support hardware PWM
-	extern			int pwmSetFrequency(int pin, float frequency);
-	
 	//  Write PWM 
 	//		Set the duty cycle, between 0 and the max range for the PWM pin controller
 	extern          void pwmWrite(int pin, int value);
 	
-	//  Write PWM
+	//  Write PWM as a unit vector
 	//		Set the desired duty cycle as a unit value
 	//		0.0 will be full off, 1.0 will be full on using the range of the PWM pin controller
 	extern			void pwmWriteUnit(int pin, float value);
+	
+	
+	//  PWM Hardware Control
+	
+	//  Set GPIO clock
+	//		- Note: not implemented in wiringJet
+	extern          void gpioClockSet(int pin, int freq);
+	
+	//  Set PWM Mode
+	//		- Note: not implemented in wiringJet
+	extern          void pwmSetMode(int mode);
+	
+	//  Set PWM Clock
+	//		- Note: not implemented in wiringJet
+	extern          void pwmSetClock(int divisor);
+	
+	//  Set PWM Frequency
+	//		Set the PWM frequency for the pin, valid only for pins that support hardware PWM
+	extern			int pwmSetFrequency(int pin, float frequency);
+	
+	//  Set PWM Range
+	//		- Note: not implemented in wiringJet
+	extern          void pwmSetRange(unsigned int range);
 	
 	//  Get the PWM range for the given pin
 	//
@@ -125,24 +167,19 @@ extern "C" {
 	
 	
 	//  Software PWM
+	
 	//		- Not implemented yet
 	extern int  softPwmCreate(int pin, int value, int range);
 	extern void softPwmWrite(int pin, int value);
 	extern void softPwmStop(int pin);
 	//
+		
 	
+	//  Interrupts
 	
-	// Read analog value from the pin
-	//		The Jetson does not have built in ADC.
-	//		This function is used I2C or SPI devices, such as analog to digital converters
-	extern          int  analogRead(int pin);
-
-	//  Write multi bit value to the pin
-	//		The Jetson does not have built in analog hardware.
-	//		This function is used by I2C or SPI devices with this feature.
-	extern          void analogWrite(int pin, int value);
-	
-	
+	//  Wait for Interrupt
+	//		Note: - not implemented in wiringJet
+	extern int  waitForInterrupt(int pin, int mS);
 	
 	//  Pin Edge Detection
 	//		Register a function to be called when the pin changes from high to low
@@ -152,13 +189,10 @@ extern "C" {
 	extern int  wiringPiISR(int pin, int mode, void(*function)(void));
 	
 
-	//  Wait for Interrupt
-	//		Note: - not implemented in wiringJet
-	extern int  waitForInterrupt(int pin, int mS);
+	
 	
 #pragma endregion	// PublicInterface
 	
-
 
 //  Node Management (internal workings)
 //
@@ -214,8 +248,6 @@ extern "C" {
 //  Logging
 //
 #pragma region Logging
-
-#include "wiringGpioLogging.h"
 
 	// Logging Callback
 	extern wiringGpioLoggingCallback LogFunction;

@@ -48,10 +48,18 @@ void wiringJetSetLoggingCallback(wiringGpioLoggingCallback function)
 {
 	LogFunction = function;
 }
+void wiringPiSetLoggingCallback(wiringGpioLoggingCallback function)
+{
+	wiringJetSetLoggingCallback(function);
+}
 
 void wiringJetSetLoggingLevel(wiringGpioLogLevel level)
 {
 	LoggingLevel = level;
+}
+void wiringPiSetLoggingLevel(wiringGpioLogLevel level)
+{
+	wiringJetSetLoggingLevel(level);
 }
 
 #pragma endregion
@@ -209,22 +217,45 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void(
 
 //  Setup
 //
+
+extern int  wiringPiSetup(void)
+{
+	Log(LogLevelFatal, "wiringJet.c", "wiringPiSetup", "Not implemented");
+	return -1;
+}
+
+extern int  wiringPiSetupSys(void)
+{
+	Log(LogLevelFatal, "wiringJet.c", "wiringPiSetupSys", "Not implemented");
+	return -1;
+}
+
+extern int  wiringPiSetupGpio(void)
+{
+	Log(LogLevelFatal, "wiringJet.c", "wiringPiSetupGpio", "Not implemented");
+	return -1;
+}
+
 int wiringJetSetupPhys()
 {
 	return gpioInitialise();
 }
-
+//
 int wiringPiSetupPhys()
 {
 	return wiringJetSetupPhys();
 }
-
 
 //  ShutDown
 //
 void wiringJetTerminate()
 {
 	gpioTerminate();
+}
+//
+void wiringPiTerminate()
+{
+	wiringJetTerminate();
 }
 	
 
@@ -309,27 +340,6 @@ void digitalWrite(int pin, int value)
 }
 
 
-//  PWM Set Frequency
-//
-int pwmSetFrequency(int pin, float frequency)
-{
-	LogFormatted(LogLevelInfo, "wiringJet.c", "pwmSetFrequency", "Setting PWM frequency for pin %d to %.1f", pin, frequency);
-	
-	if (pin < 40)
-	{
-		return gpioSetPWMfrequency(pin, frequency);
-	}
-	else
-	{
-		struct wiringJetNodeStruct* node = NULL;
-		if ((node = wiringJetFindNode(pin)) != NULL)
-		{
-			node->pwmSetFrequency(node, frequency);
-		}
-		return 0;
-	}
-}
-		
 
 //  PWM Write
 //
@@ -368,6 +378,55 @@ void pwmWriteUnit(int pin, float value)
 	}
 }
 	
+
+extern          void gpioClockSet(int pin, int freq)
+{
+	Log(LogLevelFatal, "wiringJet.c", "gpioClockSet", "Not implemented");
+}
+	
+
+extern          void pwmSetMode(int mode)
+{
+	Log(LogLevelFatal, "wiringJet.c", "pwmSetMode", "Not implemented");
+}
+
+extern          void pwmSetClock(int divisor)
+{
+	Log(LogLevelFatal, "wiringJet.c", "pwmSetClock", "Not implemented");
+}
+	
+
+//  PWM Set Frequency
+//
+int pwmSetFrequency(int pin, float frequency)
+{
+	LogFormatted(LogLevelInfo, "wiringJet.c", "pwmSetFrequency", "Setting PWM frequency for pin %d to %.1f", pin, frequency);
+	
+	if (pin < 40)
+	{
+		return gpioSetPWMfrequency(pin, frequency);
+	}
+	else
+	{
+		struct wiringJetNodeStruct* node = NULL;
+		if ((node = wiringJetFindNode(pin)) != NULL)
+		{
+			node->pwmSetFrequency(node, frequency);
+		}
+		return 0;
+	}
+}
+		
+
+//  PWM Set Range
+//
+extern          void pwmSetRange(unsigned int range)
+{
+	Log(LogLevelFatal, "wiringJet.c", "pwmSetRange", "Not implemented");
+}
+
+
+
 //  Get the PWM range for the given pin
 //
 int pwmGetRange(int pin)
@@ -396,6 +455,7 @@ int pwmGetRange(int pin)
 
 
 	
+
 extern int  softPwmCreate(int pin, int value, int range)
 {
 	Log(LogLevelFatal, "wiringJet.c", "softPwmCreate", "Not implemented");
