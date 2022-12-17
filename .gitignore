@@ -7,3 +7,5 @@ wiringJetTests/Debug
 ._.gitignore
 gcc_Debug.h
 gcc_Release.h
+wiringJet/Release
+wiringJetTests/Release
