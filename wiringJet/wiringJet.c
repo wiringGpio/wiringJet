@@ -84,7 +84,9 @@ static          int digitalReadDummy(UNU struct wiringJetNodeStruct *node, UNU i
 static         void digitalWriteDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static         void pwmWriteDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static         void pwmSetFrequencyDummy(UNU struct wiringJetNodeStruct *node, UNU float value) { return; }
+static		  float pwmGetFrequencyDummy(UNU struct wiringJetNodeStruct *node) {return 0.0;}
 static			int pwmGetRangeDummy(UNU struct wiringJetNodeStruct *node, UNU int pin) {return 0;}
+static			int isHardwarePwmDummy(UNU struct wiringJetNodeStruct *node, UNU int pin) {return 0;}
 static          int analogReadDummy(UNU struct wiringJetNodeStruct *node, UNU int pin)            { return 0 ; }
 static         void analogWriteDummy(UNU struct wiringJetNodeStruct *node, UNU int pin, UNU int value) { return ; }
 
@@ -132,7 +134,9 @@ struct wiringJetNodeStruct *wiringJetNewNode(int pinBase, int numPins)
 	node->digitalWrite		= digitalWriteDummy;
 	node->pwmWrite			= pwmWriteDummy;
 	node->pwmSetFrequency	= pwmSetFrequencyDummy;
+	node->pwmGetFrequency	= pwmGetFrequencyDummy;
 	node->pwmGetRange		= pwmGetRangeDummy;
+	node->isHardwarePwm	    = isHardwarePwmDummy;
 	node->analogRead		= analogReadDummy;
 	node->analogWrite		= analogWriteDummy;
 	node->next				= jetGpioNodes;
@@ -274,12 +278,12 @@ void pinMode(int pin, int mode)
 	LogFormatted(LogLevelInfo, "wiringJet.c", "pinMode", "Setting pin %d to mode %d", pin, mode);
 	if (pin <= 40)		
 	{
-		//  read the carrier board device pin
+		//  set the carrier board device pin mode
 		gpioSetMode(pin, mode);
 	}
 	else
 	{
-		//  read the external pin if it exists
+		//  set the external pin if it exists
 		struct wiringJetNodeStruct *node = NULL;
 		if((node = wiringJetFindNode(pin)) != NULL)
 		{
@@ -390,6 +394,7 @@ extern          void pwmSetMode(int mode)
 	Log(LogLevelFatal, "wiringJet.c", "pwmSetMode", "Not implemented");
 }
 
+
 extern          void pwmSetClock(int divisor)
 {
 	Log(LogLevelFatal, "wiringJet.c", "pwmSetClock", "Not implemented");
@@ -398,13 +403,31 @@ extern          void pwmSetClock(int divisor)
 
 //  PWM Set Frequency
 //
+float pwmFrequency0 = 0;
+float pwmFrequency2 = 0;
+
 int pwmSetFrequency(int pin, float frequency)
 {
 	LogFormatted(LogLevelInfo, "wiringJet.c", "pwmSetFrequency", "Setting PWM frequency for pin %d to %.1f", pin, frequency);
 	
 	if (pin < 40)
 	{
-		return gpioSetPWMfrequency(pin, frequency);
+		int ret = gpioSetPWMfrequency(pin, frequency);
+		if (ret >= 0)
+		{
+			switch (pin)
+			{
+			case 31:
+				pwmFrequency0 = frequency;
+				break;
+			case 32:
+				pwmFrequency2 = frequency;
+				break;
+			default:
+				LogFormatted(LogLevelError, "wiringJet.c", "pwmSetFrequency", "Pin %d is not a hardware PWM pin", pin);
+				return 0;
+			}
+		}
 	}
 	else
 	{
@@ -412,6 +435,35 @@ int pwmSetFrequency(int pin, float frequency)
 		if ((node = wiringJetFindNode(pin)) != NULL)
 		{
 			node->pwmSetFrequency(node, frequency);
+		}
+		return 0;
+	}
+}
+
+
+//  PWM Get Frequency
+//
+float pwmGetFrequency(int pin)
+{
+	if (pin < 40)
+	{
+		switch (pin)
+		{
+		case 31:
+			return pwmFrequency0;
+		case 32:
+			return pwmFrequency2;
+		default:
+			LogFormatted(LogLevelError, "wiringJet.c", "pwmGetFrequency", "Pin %d is not a hardware PWM pin", pin);
+			return 0;
+		}
+	}
+	else
+	{
+		struct wiringJetNodeStruct* node = NULL;
+		if ((node = wiringJetFindNode(pin)) != NULL)
+		{
+			node->pwmGetFrequency(node);
 		}
 		return 0;
 	}
@@ -424,8 +476,6 @@ extern          void pwmSetRange(unsigned int range)
 {
 	Log(LogLevelFatal, "wiringJet.c", "pwmSetRange", "Not implemented");
 }
-
-
 
 //  Get the PWM range for the given pin
 //
@@ -448,6 +498,34 @@ int pwmGetRange(int pin)
 		if ((node = wiringJetFindNode(pin)) != NULL)
 		{
 			return node->pwmGetRange(node, pin);
+		}
+		return 0;
+	}
+}
+
+
+
+//  Is Hardware PWM pin
+//
+int pwmIsHardwarePwmPin(int pin)
+{
+	if (pin <= 40)
+	{
+		switch (pin) 
+		{
+		case 31:
+		case 32:
+			return 1;
+		default:
+			return 0;
+		}
+	}
+	else
+	{
+		struct wiringJetNodeStruct *node = NULL;
+		if ((node = wiringJetFindNode(pin)) != NULL)
+		{
+			return node->isHardwarePwm(node, pin) ;
 		}
 		return 0;
 	}

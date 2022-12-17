@@ -1703,7 +1703,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			break;
 		default:
 			status = -1;
-			Log(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Only gpio numbers from 3 to 40 are accepted.");
+			LogFormatted(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Pin number %d Only gpio numbers from 3 to 40 are accepted.",gpio);
 		}
 	}
 	else if (mode == OUTPUT) 
@@ -1880,7 +1880,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			break;
 		default:
 			status = -2;
-			Log(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Only gpio numbers from 3 to 40 are accepted.");
+			LogFormatted(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Pin number %d Only gpio numbers from 3 to 40 are accepted.", gpio);
 		}
 		
 	}

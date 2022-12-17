@@ -157,6 +157,10 @@ extern "C" {
 	//		Set the PWM frequency for the pin, valid only for pins that support hardware PWM
 	extern			int pwmSetFrequency(int pin, float frequency);
 	
+	//  Get PWM Frequency
+	//		Get the PWM frequency for the pin, valid only for pins that support hardware PWM
+	extern			float pwmGetFrequency(int pin);
+	
 	//  Set PWM Range
 	//		- Note: not implemented in wiringJet
 	extern          void pwmSetRange(unsigned int range);
@@ -164,6 +168,10 @@ extern "C" {
 	//  Get the PWM range for the given pin
 	//
 	extern			int pwmGetRange(int pin);
+	
+	//  Get is hardware PWM pin
+	//		return 1 if is hardware PWM, otherwise 0
+	extern			int pwmIsHardwarePwmPin(int pin);
 	
 	
 	//  Software PWM
@@ -219,7 +227,9 @@ extern "C" {
 		void(*digitalWrite)(struct wiringJetNodeStruct *node, int pin, int value);
 		void(*pwmWrite)(struct wiringJetNodeStruct *node, int pin, int value);
 		void(*pwmSetFrequency)(struct wiringJetNodeStruct *node, float frequency);
+		float(*pwmGetFrequency)(struct wiringJetNodeStruct *node);
 		int(*pwmGetRange)(struct wiringJetNodeStruct *node, int pin);
+		int(*isHardwarePwm)(struct wiringJetNodeStruct *node, int pin);
 		int(*analogRead)(struct wiringJetNodeStruct *node, int pin);
 		void(*analogWrite)(struct wiringJetNodeStruct *node, int pin, int value);
 
