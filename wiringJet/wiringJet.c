@@ -208,7 +208,7 @@ extern int wiringPiGetFileDescriptorForNode(int pin)
 
 // JETGPIO function declarations
 int gpioInitialise(void);
-void gpioTerminate(void);
+void gpioTerminate(int);
 int gpioSetMode(unsigned gpio, unsigned mode); 
 int gpioRead(unsigned gpio);
 int gpioAnalogRead(unsigned pin);
@@ -254,7 +254,7 @@ int wiringPiSetupPhys()
 //
 void wiringJetTerminate()
 {
-	gpioTerminate();
+	gpioTerminate(0);
 }
 //
 void wiringPiTerminate()
