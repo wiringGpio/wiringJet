@@ -532,27 +532,6 @@ int pwmIsHardwarePwmPin(int pin)
 }
 
 
-	
-
-extern int  softPwmCreate(int pin, int value, int range)
-{
-	Log(LogLevelFatal, "wiringJet.c", "softPwmCreate", "Not implemented");
-	return -1;
-}
-	
-extern void softPwmWrite(int pin, int value)
-{
-	Log(LogLevelFatal, "wiringJet.c", "softPwmWrite", "Not implemented");
-}	
-	
-extern void softPwmStop(int pin)
-{
-	Log(LogLevelFatal, "wiringJet.c", "softPwmStop", "Not implemented");
-}	
-	
-
-
-
 //  Analog Read
 //
 int  analogRead(int pin)

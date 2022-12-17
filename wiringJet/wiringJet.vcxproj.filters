@@ -68,6 +68,9 @@
     <ClCompile Include="mcp23017.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="softPwm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mcp23008.h">
@@ -98,6 +101,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="wiringGpioLogging.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="softPwm.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

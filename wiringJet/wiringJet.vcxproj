@@ -77,6 +77,7 @@
     <ClCompile Include="mcp23017.c" />
     <ClCompile Include="mcp3004.c" />
     <ClCompile Include="pca9685.c" />
+    <ClCompile Include="softPwm.c" />
     <ClCompile Include="wiringJet.c" />
     <ClCompile Include="wiringJetI2C.c" />
     <ClCompile Include="wiringJetSPI.c" />
@@ -98,6 +99,7 @@
     <ClInclude Include="mcp23x0817.h" />
     <ClInclude Include="mcp3004.h" />
     <ClInclude Include="pca9685.h" />
+    <ClInclude Include="softPwm.h" />
     <ClInclude Include="wiringGpioLogging.h" />
     <ClInclude Include="wiringJet.h" />
     <ClInclude Include="wiringJetI2C.h" />
