@@ -12,7 +12,7 @@
 int testPinOutput(int argc, char *argv[])
 {
 	//  hardware setup configuration
-	int pin = 40;	
+	int pin = 3;	
 	
 	pinMode(pin, OUTPUT);
 
@@ -24,9 +24,20 @@ int testPinOutput(int argc, char *argv[])
 		Log(LogLevelDebug, "TestPinOutput.cpp", "testPinOutput", "Turning pin ON.");
 		digitalWrite(pin, 1);
 		usleep(1000000);
+		int state = digitalRead(pin);
+		if (state != HIGH)
+		{
+			LogFormatted(LogLevelError, "TestPinOutput.cpp", "testPinOutput", "Pin state does not read high");
+		}
+			
 		Log(LogLevelDebug, "TestPinOutput.cpp", "testPinOutput", "Turning pin OFF.");
 		digitalWrite(pin, 0);
 		usleep(1000000);
+		state = digitalRead(pin);
+		if (state != LOW)
+		{
+			LogFormatted(LogLevelError, "TestPinOutput.cpp", "testPinOutput", "Pin state does not read LOW");
+		}
 		x++;
 	}
 	

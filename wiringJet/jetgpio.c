@@ -1164,94 +1164,192 @@ int gpioRead(unsigned gpio)
 	int level = 0;
 	switch (gpio) 
 	{
-		
 	case 3:
-		level = (pin3->IN[0]) >> 3 & 1;
+		if (*pinmux3 == PINMUX_IN)
+			level = (pin3->IN[0]) >> 3 & 1;
+		else
+			level = (pin3->OUT[0]) >> 3 & 1;
 		break;
 	case 5:
-		level = (pin5->IN[0]) >> 2 & 1;
+		if (*pinmux5 == PINMUX_IN)
+			level = (pin5->IN[0]) >> 2 & 1;
+		else
+			level = (pin5->OUT[0]) >> 2 & 1;
 		break;
 	case 7:
-		level = pin7->IN[0] & 1;
+		if (*pinmux7 == PINMUX_IN)
+			level = pin7->IN[0] & 1;
+		else
+			level = pin7->OUT[0] & 1;
 		break;
 	case 8:
-		level = pin8->IN[0] & 1;
+		if (*pinmux8 == PINMUX_IN)
+			level = pin8->IN[0] & 1;
+		else
+			level = pin8->OUT[0] & 1;
 		break;
 	case 10:
-		level = (pin10->IN[0]) >> 1 & 1;
+		if (*pinmux10 == PINMUX_IN)
+			level = (pin10->IN[0]) >> 1 & 1;
+		else
+			level = (pin10->OUT[0]) >> 1 & 1;
 		break;
 	case 11:
-		level = (pin11->IN[0]) >> 2 & 1;
+		if (*pinmux11 == PINMUX_IN)
+			level = (pin11->IN[0]) >> 2 & 1;
+		else
+			level = (pin11->OUT[0]) >> 2 & 1;
 		break;
 	case 12:
-		level = (pin12->IN[0]) >> 7 & 1;
+		if (*pinmux12 == PINMUX_IN)
+			level = (pin12->IN[0]) >> 7 & 1;
+		else
+			level = (pin12->OUT[0]) >> 7 & 1;
 		break;
 	case 13:
-		level = (pin13->IN[0]) >> 6 & 1;
+		if (*pinmux13 == PINMUX_IN)
+			level = (pin13->IN[0]) >> 6 & 1;
+		else
+			level = (pin13->OUT[0]) >> 6 & 1;
 		break;
 	case 15:
-		level = (pin15->IN[0]) >> 2 & 1;
+		if (*pinmux15 == PINMUX_IN)
+			level = (pin15->IN[0]) >> 2 & 1;
+		else
+			level = (pin15->OUT[0]) >> 2 & 1;
 		break;
 	case 16:
-		level = pin16->IN[0] & 1;
+		if (*pinmux16 == PINMUX_IN)
+			level = pin16->IN[0] & 1;
+		else
+			level = pin16->OUT[0] & 1;
 		break;
 	case 18:
-		level = (pin18->IN[0]) >> 7 & 1;
+		if (*pinmux18 == PINMUX_IN)
+			level = (pin18->IN[0]) >> 7 & 1;
+		else
+			level = (pin18->OUT[0]) >> 7 & 1;
 		break;
 	case 19:
-		level = pin19->IN[0] & 1;
+		if (*pinmux19 == PINMUX_IN)
+			level = pin19->IN[0] & 1;
+		else
+			level = pin19->OUT[0] & 1;
 		break;
 	case 21:
-		level = (pin21->IN[0]) >> 1 & 1;
+		if (*pinmux21 == PINMUX_IN)
+			level = (pin21->IN[0]) >> 1 & 1;
+		else
+			level = (pin21->OUT[0]) >> 1 & 1;
 		break;
 	case 22:
-		level = (pin22->IN[0]) >> 5 & 1;
+		if (*pinmux22 == PINMUX_IN)
+			level = (pin22->IN[0]) >> 5 & 1;
+		else
+			level = (pin22->OUT[0]) >> 5 & 1;
 		break;
 	case 23:
-		level = (pin23->IN[0]) >> 2 & 1;
+		if (*pinmux23 == PINMUX_IN)
+			level = (pin23->IN[0]) >> 2 & 1;
+		else 
+			level = (pin23->OUT[0]) >> 2 & 1;
 		break;
 	case 24:
-		level = (pin24->IN[0]) >> 3 & 1;
+		if (*pinmux24 == PINMUX_IN)
+			level = (pin24->IN[0]) >> 3 & 1;
+		else
+			level = (pin24->OUT[0]) >> 3 & 1;
 		break;
 	case 26:
-		level = (pin26->IN[0]) >> 4 & 1;
+		if (*pinmux26 == PINMUX_IN)
+			level = (pin26->IN[0]) >> 4 & 1;
+		else
+			level = (pin26->OUT[0]) >> 4 & 1;
 		break;
 	case 27:
-		level = pin27->IN[0] & 1;
+		if (*pinmux27 == PINMUX_IN)
+			level = pin27->IN[0] & 1;
+		else
+			level = pin27->OUT[0] & 1;
 		break;
 	case 28:
-		level = (pin28->IN[0]) >> 1 & 1;
+		if (*pinmux28 == PINMUX_IN)
+			level = (pin28->IN[0]) >> 1 & 1;
+		else
+			level = (pin28->OUT[0]) >> 1 & 1;
 		break;
 	case 29:
-		level = (pin29->IN[0]) >> 5 & 1;
+		if (*pinmux29 == PINMUX_IN)
+			level = (pin29->IN[0]) >> 5 & 1;
+		else
+			level = (pin29->OUT[0]) >> 5 & 1;
 		break;
 	case 31:
-		level = pin31->IN[0] & 1;
+		if (*pinmux31 == PINMUX_IN)
+			level = pin31->IN[0] & 1;
+		else
+			level = pin31->OUT[0] & 1;
 		break;
 	case 32:
-		level = pin32->IN[0] & 1;
+		if (*pinmux32 == PINMUX_IN)
+			level = pin32->IN[0] & 1;
+		else
+			level = pin32->OUT[0] & 1;
 		break;
 	case 33:
-		level = (pin33->IN[0]) >> 6 & 1;
+		if (*pinmux33 == PINMUX_IN)
+			level = (pin33->IN[0]) >> 6 & 1;
+		else
+			level = (pin33->OUT[0]) >> 6 & 1;
 		break;
 	case 35:
-		level = (pin35->IN[0]) >> 4 & 1;
+		if (*pinmux35 == PINMUX_IN)
+			level = (pin35->IN[0]) >> 4 & 1;
+		else
+			level = (pin35->OUT[0]) >> 4 & 1;
 		break;
 	case 36:
-		level = (pin36->IN[0]) >> 3 & 1;
+		if (*pinmux36 == PINMUX_IN)
+			level = (pin36->IN[0]) >> 3 & 1;
+		else
+			level = (pin36->OUT[0]) >> 3 & 1;
 		break;
 	case 37:
-		level = (pin37->IN[0]) >> 4 & 1;
+		if (*pinmux37 == PINMUX_IN)
+			level = (pin37->IN[0]) >> 4 & 1;
+		else
+			level = (pin37->OUT[0]) >> 4 & 1;
 		break;
 	case 38:
-		level = (pin38->IN[0]) >> 5 & 1;
+		if (*pinmux38 == PINMUX_IN)
+			level = (pin38->IN[0]) >> 5 & 1;
+		else
+			level = (pin38->OUT[0]) >> 5 & 1;
 		break;
 	case 40:
-		level = (pin40->IN[0]) >> 6 & 1;
+		if ( *pinmux40 == PINMUX_IN)
+			level = (pin40->IN[0]) >> 6 & 1;
+		else
+			level = (pin40->OUT[0]) >> 6 & 1;
+		break;
+	case 1:
+	case 2:
+	case 4:
+	case 6:
+	case 9:
+	case 14:
+	case 17:
+	case 20:
+	case 25:
+	case 30:
+	case 34:
+	case 39:
+		level = -1;
 		break;
 	default:
 		level = -1;
-		Log(LogLevelWarn, "jetgpio.c", "gpioRead", "Only gpio numbers from 3 to 40 are accepted.");
+		Log(LogLevelWarn, "jetgpio.c", "gpioRead", "Only gpio numbers from 1 to 40 are accepted.");
+		break;
 	}
 	return level;
 }
@@ -1349,9 +1447,24 @@ int gpioWrite(unsigned gpio, unsigned level)
 		case 40:
 			pin40->OUT[0] &= ~(0x00000040);
 			break;
+		case 1:
+		case 2:
+		case 4:
+		case 6:
+		case 9:
+		case 14:
+		case 17:
+		case 20:
+		case 25:
+		case 30:
+		case 34:
+		case 39:
+			status = -1;
+			break;
 		default:
 			status = -1;
-			Log(LogLevelWarn, "jetgpio.c", "gpioWrite", "Only gpio numbers from 3 to 40 are accepted.");
+			Log(LogLevelWarn, "jetgpio.c", "gpioWrite", "Only gpio numbers from 1 to 40 are accepted.");
+			break;
 		}
 	}
 	else if (level == 1) 
@@ -1443,9 +1556,24 @@ int gpioWrite(unsigned gpio, unsigned level)
 		case 40:
 			pin40->OUT[0] |= level << 6;
 			break;
+		case 1:
+		case 2:
+		case 4:
+		case 6:
+		case 9:
+		case 14:
+		case 17:
+		case 20:
+		case 25:
+		case 30:
+		case 34:
+		case 39:
+			status = -2;
+			break;
 		default:
 			status = -2;
-			Log(LogLevelWarn, "jetgpio.c", "gpioWrite", "Only gpio numbers from 3 to 40 are accepted.");
+			Log(LogLevelWarn, "jetgpio.c", "gpioWrite", "Only gpio numbers from 1 to 40 are accepted.");
+			break;
 		}
 	}
 	else 
@@ -1477,6 +1605,7 @@ int gpioSetPWMfrequency(unsigned gpio, float frequency)
 		default:
 			status = -1;
 			Log(LogLevelWarn, "jetgpio.c", "gpioSetPWMFrequency", "Only gpio numbers 32 and 33 are accepted.");
+			break;
 		}
 		
 	}
@@ -1515,6 +1644,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 		default:
 			status = -1;
 			Log(LogLevelWarn, "jetgpio.c", "gpioPWM", "Only gpio numbers 32 and 33 are accepted.");
+			break;
 		}
 	}
 	else 
@@ -1701,9 +1831,24 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin40->CNF[0] |= 0x00000040;
 			pin40->OE[0] &= ~(0x00000040);
 			break;
+		case 1:
+		case 2:
+		case 4:
+		case 6:
+		case 9:
+		case 14:
+		case 17:
+		case 20:
+		case 25:
+		case 30:
+		case 34:
+		case 39:
+			status = -1;
+			break;
 		default:
 			status = -1;
-			LogFormatted(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Pin number %d Only gpio numbers from 3 to 40 are accepted.",gpio);
+			LogFormatted(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Pin number %d Only gpio numbers from 1 to 40 are accepted.",gpio);
+			break;
 		}
 	}
 	else if (mode == OUTPUT) 
@@ -1878,9 +2023,24 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin40->CNF[0] |= 0x00000040;
 			pin40->OE[0] |= 0x00000040;
 			break;
+		case 1:
+		case 2:
+		case 4:
+		case 6:
+		case 9:
+		case 14:
+		case 17:
+		case 20:
+		case 25:
+		case 30:
+		case 34:
+		case 39:
+			status = -2;
+			break;
 		default:
 			status = -2;
-			LogFormatted(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Pin number %d Only gpio numbers from 3 to 40 are accepted.", gpio);
+			LogFormatted(LogLevelWarn, "jetgpio.c", "gpioSetMode", "Pin number %d Only gpio numbers from 1 to 40 are accepted.", gpio);
+			break;
 		}
 		
 	}
@@ -2163,9 +2323,24 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void(
 			pin40->INT_CLR[0] |= x;
 			gpio_offset = 78;
 			break;
+		case 1:
+		case 2:
+		case 4:
+		case 6:
+		case 9:
+		case 14:
+		case 17:
+		case 20:
+		case 25:
+		case 30:
+		case 34:
+		case 39:
+			status = -1;
+			break;
 		default:
 			status = -1;
-			Log(LogLevelWarn, "jetgpio.c", "gpioSetISRFunc", "Only gpio numbers from 3 to 40 are accepted.");
+			Log(LogLevelWarn, "jetgpio.c", "gpioSetISRFunc", "Only gpio numbers from 1 to 40 are accepted.");
+			break;
 		}
 	}
   
